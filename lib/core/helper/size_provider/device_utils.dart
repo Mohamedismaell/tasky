@@ -1,5 +1,5 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_app/core/helper/size_provider/sized_helper_extension.dart';
 
 class DeviceUtils {
   static bool isMobile(BuildContext context) => context.screenWidth < 600;

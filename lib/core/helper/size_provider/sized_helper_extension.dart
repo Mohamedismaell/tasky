@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:bookreading/core/helper/size_provider/size_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_app/core/helper/size_provider/size_provider.dart';
 
 extension SizedHelperExtension on BuildContext {
   bool get isLandscape =>

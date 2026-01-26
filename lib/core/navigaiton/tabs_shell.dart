@@ -1,10 +1,6 @@
-import 'package:bookreading/core/helper/size_provider/sized_helper_extension.dart';
-import 'package:bookreading/features/book/presentation/screens/bookmarks_page.dart';
-import 'package:bookreading/features/book/presentation/screens/explore_page.dart';
-import 'package:bookreading/features/book/presentation/screens/home_page.dart';
-import 'package:bookreading/features/book/presentation/screens/profile_page.dart';
-import 'package:bookreading/features/book/presentation/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_app/core/helper/size_provider/sized_helper_extension.dart';
+import 'package:to_do_app/features/home/presentation/screens/home_page.dart';
 
 class TabsShell extends StatefulWidget {
   const TabsShell({super.key});
@@ -15,23 +11,23 @@ class TabsShell extends StatefulWidget {
 
 class _TabsShellState extends State<TabsShell> {
   final pageController = PageController();
-  int _currentIndex = 0;
+  // int _currentIndex = 0;
 
-  void _onTabTap(int index) {
-    if (!pageController.hasClients) return;
-    final current = pageController.page?.round() ?? _currentIndex;
-    final distance = (index - current).abs();
+  // void _onTabTap(int index) {
+  //   if (!pageController.hasClients) return;
+  //   final current = pageController.page?.round() ?? _currentIndex;
+  //   final distance = (index - current).abs();
 
-    if (distance >= 1) {
-      int neighbor = index > _currentIndex ? index - 1 : index + 1;
-      pageController.jumpToPage(neighbor);
-    }
-    pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
-  }
+  //   if (distance >= 1) {
+  //     int neighbor = index > _currentIndex ? index - 1 : index + 1;
+  //     pageController.jumpToPage(neighbor);
+  //   }
+  //   pageController.animateToPage(
+  //     index,
+  //     duration: const Duration(milliseconds: 300),
+  //     curve: Curves.easeOut,
+  //   );
+  // }
 
   @override
   void dispose() {
@@ -48,24 +44,15 @@ class _TabsShellState extends State<TabsShell> {
         padding: EdgeInsets.symmetric(horizontal: context.setWidth(20)),
         child: PageView(
           controller: pageController,
-          onPageChanged: (index) {
-            if (mounted) {
-              setState(() {
-                _currentIndex = index;
-              });
-            }
-          },
-          children: [
-            const HomePage(),
-            const ExplorePage(),
-            const BookmarksPage(),
-            const ProfilePage(),
-          ],
+          // onPageChanged: (index) {
+          //   if (mounted) {
+          //     setState(() {
+          //       _currentIndex = index;
+          //     });
+          //   }
+          // },
+          children: [const HomePage()],
         ),
-      ),
-      bottomNavigationBar: BottomNav(
-        currentIndex: _currentIndex,
-        onTap: _onTabTap,
       ),
     );
   }

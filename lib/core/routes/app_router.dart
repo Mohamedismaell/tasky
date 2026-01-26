@@ -1,47 +1,44 @@
-import 'package:bookreading/core/auth/auth_notifier.dart';
-import 'package:bookreading/core/routes/app_routes.dart';
-import 'package:bookreading/features/book/routes/home_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../features/auth/routes/auth_routes.dart';
-import '../di/service_locator.dart';
+import 'package:to_do_app/core/routes/app_routes.dart';
+import '../../features/home/routes/auth_routes.dart';
+import '../injection/service_locator.dart';
 
 class AppRouter {
   static GoRouter get router => _router;
   static final GoRouter _router = GoRouter(
-    initialLocation: AppRoutes.login,
-    refreshListenable: sl<AuthNotifier>(),
-    redirect: (context, state) {
-      final authNotifier = sl<AuthNotifier>();
-      final supabase = sl<SupabaseClient>();
-      final user = supabase.auth.currentUser;
-      final loggedIn = user != null;
-      final isRecovering = authNotifier.isRecoveringPassword;
+    // initialLocation: AppRoutes.login,
+    // refreshListenable: sl<AuthNotifier>(),
+    // redirect: (context, state) {
+    //   final authNotifier = sl<AuthNotifier>();
+    //   final supabase = sl<SupabaseClient>();
+    //   final user = supabase.auth.currentUser;
+    //   final loggedIn = user != null;
+    //   final isRecovering = authNotifier.isRecoveringPassword;
 
-      final isAuthRoute =
-          state.matchedLocation == AppRoutes.login ||
-          state.matchedLocation == AppRoutes.signUp;
+    //   final isAuthRoute =
+    //       state.matchedLocation == AppRoutes.login ||
+    //       state.matchedLocation == AppRoutes.signUp;
 
-      final isForgotRoute = state.matchedLocation == AppRoutes.forgotPassword;
+    //   final isForgotRoute = state.matchedLocation == AppRoutes.forgotPassword;
 
-      final isResetRoute = state.matchedLocation == AppRoutes.resetPassword;
+    //   final isResetRoute = state.matchedLocation == AppRoutes.resetPassword;
 
-      if (isRecovering && !isResetRoute) {
-        return AppRoutes.resetPassword;
-      }
+    //   if (isRecovering && !isResetRoute) {
+    //     return AppRoutes.resetPassword;
+    //   }
 
-      if (!loggedIn && !isAuthRoute && !isForgotRoute && !isResetRoute) {
-        return AppRoutes.login;
-      }
+    //   if (!loggedIn && !isAuthRoute && !isForgotRoute && !isResetRoute) {
+    //     return AppRoutes.login;
+    //   }
 
-      if (loggedIn && isAuthRoute && !isRecovering) {
-        return AppRoutes.home;
-      }
+    //   if (loggedIn && isAuthRoute && !isRecovering) {
+    //     return AppRoutes.home;
+    //   }
 
-      return null;
-    },
-    routes: [...AuthRoutes.routes, ...HomeRoutes.routes],
+    //   return null;
+    // },
+    routes: [...HomeRoutes.routes],
     errorBuilder: (context, state) => ErrorScreen(error: state.error),
   );
 }

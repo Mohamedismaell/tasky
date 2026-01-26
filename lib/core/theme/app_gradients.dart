@@ -1,5 +1,5 @@
-import 'package:bookreading/core/theme/app_semantic_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_app/core/theme/app_semantic_colors.dart';
 
 class AppGradients {
   const AppGradients._();
