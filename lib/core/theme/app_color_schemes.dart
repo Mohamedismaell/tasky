@@ -1,44 +1,39 @@
 import 'package:flutter/material.dart';
-import 'app_semantic_colors.dart';
+import 'app_colors.dart';
 
-//! LIGHT SCHEME
-final ColorScheme lightColorScheme = ColorScheme.light(
+final ColorScheme lightColorScheme = ColorScheme(
   brightness: Brightness.light,
 
-  // Primary action
-  primary: AppSemanticColors.primaryActionLight,
-  onPrimary: AppSemanticColors.onPrimaryActionLight,
+  primary: AppColors.primaryLight,
+  onPrimary: AppColors.textPrimaryLight,
 
-  // Accent / highlight `
-  secondary: AppSemanticColors.accentLight,
-  onSecondary: AppSemanticColors.textPrimaryLight,
+  surface: AppColors.surfaceLight,
+  onSurface: AppColors.textPrimaryLight,
+  onSurfaceVariant: AppColors.textSecondaryLight,
 
-  // Surfaces
-  surface: AppSemanticColors.surfaceLight,
-  onSurface: AppSemanticColors.textPrimaryLight,
-  surfaceContainer: AppSemanticColors.surfaceMutedLight.withOpacity(0.4),
-  // Status
-  error: Colors.red,
-  onError: AppSemanticColors.onPrimaryActionLight,
+  outline: AppColors.outlineLight,
+
+  // Required but not emphasized in M3
+  secondary: AppColors.primaryLight,
+  onSecondary: AppColors.textPrimaryLight,
+  error: const Color(0xFFB00020),
+  onError: Colors.white,
 );
 
-//! DARK SCHEME
-final ColorScheme darkColorScheme = ColorScheme.dark(
+final ColorScheme darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
 
-  // Primary action
-  primary: AppSemanticColors.primaryActionDark,
-  onPrimary: AppSemanticColors.onPrimaryActionDark,
+  primary: AppColors.primaryDark,
+  onPrimary: AppColors.textPrimaryDark,
 
-  // Accent / highlight
-  secondary: AppSemanticColors.accentDark,
-  onSecondary: AppSemanticColors.textPrimaryDark,
+  surface: AppColors.surfaceDark,
+  onSurface: AppColors.textPrimaryDark,
+  onSurfaceVariant: AppColors.textSecondaryDark,
 
-  // Surfaces
-  surface: AppSemanticColors.surfaceDark,
-  onSurface: AppSemanticColors.textPrimaryDark,
-  surfaceContainer: AppSemanticColors.surfaceMutedDark.withOpacity(0.1),
-  // Status
-  error: Colors.red,
-  onError: AppSemanticColors.onPrimaryActionDark,
+  outline: AppColors.outlineDark,
+
+  secondary: AppColors.primaryDark,
+  onSecondary: AppColors.textPrimaryDark,
+  error: const Color(0xFFCF6679),
+  onError: Colors.black,
 );

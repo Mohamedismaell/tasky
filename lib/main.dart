@@ -9,7 +9,7 @@ import 'package:to_do_app/core/helper/size_provider/sized_helper_extension.dart'
 import 'package:to_do_app/core/routes/app_router.dart';
 import 'core/observers/app_bloc_observer.dart';
 import 'core/injection/service_locator.dart';
-import 'core/theme/cubit/theme_cubit.dart';
+import 'core/theme/manager/theme_cubit.dart';
 import 'core/theme/theme_data/dark_theme_data.dart';
 import 'core/theme/theme_data/light_theme_data.dart';
 
@@ -36,7 +36,7 @@ class AppBootstrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [], child: const MyApp());
+    return const MyApp();
   }
 }
 

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 
-import '../theme/cubit/theme_cubit.dart';
+import '../theme/manager/theme_cubit.dart';
 
 class ThemeIcon extends StatelessWidget {
   const ThemeIcon({super.key, this.top, this.right});

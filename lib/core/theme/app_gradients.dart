@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/core/theme/app_semantic_colors.dart';
 
 class AppGradients {
   const AppGradients._();
@@ -8,8 +7,8 @@ class AppGradients {
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,
     colors: [
-      AppSemanticColors.primaryActionLight,
-      AppSemanticColors.primaryActionLight.withOpacity(0.6),
+      // AppSemanticColors.primaryActionLight,
+      // AppSemanticColors.primaryActionLight.withOpacity(0.6),
     ],
   );
 

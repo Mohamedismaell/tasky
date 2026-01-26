@@ -1,72 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/core/theme/app_font_family.dart';
 
 class AppTextTheme {
   const AppTextTheme._();
 
-  static const String font = 'Merriweather';
+  static const fontFamily = AppFontFamily.poppins;
 
   static TextTheme from(ColorScheme c) {
     return TextTheme(
-      headlineLarge: TextStyle(
-        fontFamily: font,
-        fontSize: 30,
-        fontWeight: FontWeight.w700,
-        color: c.onSurface,
-      ),
-      headlineMedium: TextStyle(
-        fontFamily: font,
-        fontSize: 24,
-        fontWeight: FontWeight.w700,
-        color: c.onSurface,
-      ),
-      headlineSmall: TextStyle(
-        fontFamily: font,
-        fontSize: 18,
-        fontWeight: FontWeight.w700,
+      //* Title
+      titleLarge: TextStyle(
+        fontSize: 22,
+        height: 28 / 22,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0,
         color: c.onSurface,
       ),
 
+      //* Body
       bodyLarge: TextStyle(
-        fontFamily: font,
-        fontSize: 18,
+        fontSize: 16,
+        height: 24 / 16,
         fontWeight: FontWeight.w400,
-        color: c.onSurface.withOpacity(0.9),
+        letterSpacing: 0.5,
+        color: c.onSurface,
       ),
 
       bodyMedium: TextStyle(
-        fontFamily: font,
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-        color: c.onSurface.withOpacity(0.8),
-      ),
-
-      bodySmall: TextStyle(
-        fontFamily: font,
         fontSize: 14,
+        height: 20 / 14,
         fontWeight: FontWeight.w400,
-        color: c.onSurface.withOpacity(0.6),
+        letterSpacing: 0.25,
+        color: c.onSurfaceVariant,
       ),
 
+      //* Label
       labelLarge: TextStyle(
-        fontFamily: font,
-        fontSize: 18,
-        fontWeight: FontWeight.w700,
-        color: c.onPrimary,
-        letterSpacing: 0.4,
-      ),
-      labelMedium: TextStyle(
-        fontFamily: font,
-        fontSize: 16,
-        fontWeight: FontWeight.w700,
-        color: c.onPrimary,
-        letterSpacing: 0.4,
-      ),
-      labelSmall: TextStyle(
-        fontFamily: font,
         fontSize: 14,
-        fontWeight: FontWeight.w700,
+        height: 20 / 14,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0.1,
         color: c.onPrimary,
-        letterSpacing: 0.4,
       ),
     );
   }

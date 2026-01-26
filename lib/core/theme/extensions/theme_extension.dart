@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../cubit/theme_cubit.dart';
+import '../manager/theme_cubit.dart';
 
 extension ThemeContextX on BuildContext {
   ThemeState get themeState => watch<ThemeCubit>().state;
