@@ -1,34 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:to_do_app/core/theme/app_colors.dart';
 import '../app_color_schemes.dart';
 import '../app_text_theme.dart';
 
 ThemeData getDarkTheme() {
-  final textTheme = AppTextTheme.from(darkColorScheme);
+  final rawTextTheme = AppTextTheme.from(darkColorScheme);
+  final responsiveTextTheme = rawTextTheme.apply(fontSizeFactor: 1.sp);
   return ThemeData(
     brightness: Brightness.dark,
     useMaterial3: true,
     colorScheme: darkColorScheme,
-    textTheme: textTheme,
+    textTheme: responsiveTextTheme,
     scaffoldBackgroundColor: AppColors.backgroundDark,
+
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: AppColors.textPrimaryDark,
+      selectionColor: AppColors.textPrimaryDark.withOpacity(
+        0.4,
+      ), // Color when selecting text
+      selectionHandleColor:
+          AppColors.textPrimaryDark, // The tear-drop handle color
+    ),
+
     inputDecorationTheme: InputDecorationTheme(
       // border: InputBorder.none,
       filled: true,
       fillColor: AppColors.surfaceDark,
       hintStyle: AppTextTheme.from(darkColorScheme).labelMedium,
+
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16.r),
         borderSide: BorderSide.none,
       ),
     ),
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        fixedSize: Size(double.infinity, 40),
+        // fixedSize: Size(double.infinity, 40.h),
         shadowColor: Colors.black.withOpacity(0.25),
-        elevation: 10,
+        elevation: 10.r,
         backgroundColor: AppColors.primaryDark,
         foregroundColor: AppColors.textPrimaryDark,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        padding: EdgeInsets.symmetric(vertical: 10.h),
+        textStyle: responsiveTextTheme.bodyMedium?.copyWith(inherit: true),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24.r),
+        ),
       ),
     ),
   );

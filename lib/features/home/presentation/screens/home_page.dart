@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/core/theme/manager/theme_cubit.dart';
@@ -12,7 +13,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: 16.r),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -22,11 +23,12 @@ class HomePage extends StatelessWidget {
               Spacer(),
               SvgPicture.asset(
                 'assets/icons/work_progress.svg',
-                width: 215,
-                height: 204,
+                width: 215.w,
+                height: 204.h,
               ),
               Spacer(),
               _buildForm(context),
+              SizedBox(height: 16.h),
             ],
           ),
         ),
@@ -41,9 +43,13 @@ Widget _buildHeader(BuildContext context) {
     children: [
       GestureDetector(
         onTap: () => context.read<ThemeCubit>().toggleTheme(),
-        child: SvgPicture.asset('assets/icons/logo.svg', width: 42, height: 42),
+        child: SvgPicture.asset(
+          'assets/icons/logo.svg',
+          width: 42.w,
+          height: 42.h,
+        ),
       ),
-      SizedBox(width: 16),
+      SizedBox(width: 16.w),
       Text('Tasky', style: context.textTheme.titleLarge),
     ],
   );
@@ -51,6 +57,8 @@ Widget _buildHeader(BuildContext context) {
 
 Widget _buildBody(BuildContext context) {
   return Column(
+    // crossAxisAlignment: CrossAxisAlignment.center,
+    // mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -58,13 +66,14 @@ Widget _buildBody(BuildContext context) {
           Text('Welcome To Tasky ', style: context.textTheme.titleLarge),
           SvgPicture.asset(
             'assets/icons/waving_hand.svg',
-            width: 28,
-            height: 28,
+            width: 28.w,
+            height: 28.h,
           ),
         ],
       ),
-      SizedBox(height: 8),
+      SizedBox(height: 8.h),
       Text(
+        textAlign: TextAlign.center,
         'Your productivity journey starts here. ',
         style: context.textTheme.bodyLarge,
       ),
@@ -77,15 +86,18 @@ Widget _buildForm(BuildContext context) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text('Full Name', style: context.textTheme.bodyLarge),
-      SizedBox(height: 8),
+      SizedBox(height: 8.h),
       TextField(decoration: InputDecoration(hintText: 'e.g. Sarah Khalid')),
-      SizedBox(height: 24),
+      SizedBox(height: 24.h),
       Center(
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {},
-            child: Text('Let’s Get Started'),
+            child: Text(
+              'Let’s Get Started',
+              // style: context.textTheme.bodyMedium,
+            ),
           ),
         ),
       ),

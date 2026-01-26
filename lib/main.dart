@@ -2,10 +2,11 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:to_do_app/core/helper/hydrated_storage.dart';
-import 'package:to_do_app/core/helper/size_provider/size_provider.dart';
-import 'package:to_do_app/core/helper/size_provider/sized_helper_extension.dart';
+// import 'package:to_do_app/core/helper/size_provider/size_provider.dart';
+// import 'package:to_do_app/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:to_do_app/core/routes/app_router.dart';
 import 'core/observers/app_bloc_observer.dart';
 import 'core/injection/service_locator.dart';
@@ -24,6 +25,7 @@ Future<void> main() async {
   print('Step 4: Service Locator initialized');
   print('Step 5: Supabase initialized');
 
+  await ScreenUtil.ensureScreenSize();
   runApp(
     DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
     // AppBootstrap(),
@@ -37,7 +39,7 @@ class AppBootstrap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => ThemeCubit())],
+      providers: [BlocProvider(create: (context) => sl<ThemeCubit>())],
       child: const MyApp(),
     );
   }
@@ -50,19 +52,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, mode) {
-        return SizeProvider(
-          baseSize: const Size(428, 926),
-          height: context.screenHeight,
-          width: context.screenWidth,
-          child: MaterialApp.router(
+        return ScreenUtilInit(
+          // baseSize: const Size(428, 926),
+          // height: context.screenHeight,
+          // width: context.screenWidth,
+          // designSize: const Size(375, 809),
+          designSize: const Size(375, 812),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (context, child) => MaterialApp.router(
             // locale: DevicePreview.locale(context),
             // builder: DevicePreview.appBuilder,
             debugShowCheckedModeBanner: false,
+            // useInheritedMediaQuery: true,
+            locale: DevicePreview.locale(context),
+            builder: DevicePreview.appBuilder,
+
             theme: getLightTheme(),
             darkTheme: getDarkTheme(),
             themeMode: mode.themeMode,
+
             routerConfig: AppRouter.router,
-            builder: DevicePreview.appBuilder,
           ),
         );
       },
