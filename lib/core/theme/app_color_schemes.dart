@@ -8,8 +8,7 @@ final ColorScheme lightColorScheme = ColorScheme(
   onPrimary: AppColors.textPrimaryLight,
 
   surface: AppColors.surfaceLight,
-  onSurface: AppColors.textPrimaryLight,
-  onSurfaceVariant: AppColors.textSecondaryLight,
+  onSurface: AppColors.textSecondaryLight,
 
   outline: AppColors.outlineLight,
 
@@ -27,8 +26,7 @@ final ColorScheme darkColorScheme = ColorScheme(
   onPrimary: AppColors.textPrimaryDark,
 
   surface: AppColors.surfaceDark,
-  onSurface: AppColors.textPrimaryDark,
-  onSurfaceVariant: AppColors.textSecondaryDark,
+  onSurface: AppColors.textSecondaryDark,
 
   outline: AppColors.outlineDark,
 

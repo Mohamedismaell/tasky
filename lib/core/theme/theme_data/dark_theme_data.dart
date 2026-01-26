@@ -11,5 +11,25 @@ ThemeData getDarkTheme() {
     colorScheme: darkColorScheme,
     textTheme: textTheme,
     scaffoldBackgroundColor: AppColors.backgroundDark,
+    inputDecorationTheme: InputDecorationTheme(
+      // border: InputBorder.none,
+      filled: true,
+      fillColor: AppColors.surfaceDark,
+      hintStyle: AppTextTheme.from(darkColorScheme).labelMedium,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        fixedSize: Size(double.infinity, 40),
+        shadowColor: Colors.black.withOpacity(0.25),
+        elevation: 10,
+        backgroundColor: AppColors.primaryDark,
+        foregroundColor: AppColors.textPrimaryDark,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      ),
+    ),
   );
 }

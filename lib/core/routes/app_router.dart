@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:to_do_app/core/routes/app_routes.dart';
-import '../../features/home/routes/auth_routes.dart';
-import '../injection/service_locator.dart';
+import '../../features/home/routes/home_routes.dart';
 
 class AppRouter {
   static GoRouter get router => _router;
   static final GoRouter _router = GoRouter(
-    // initialLocation: AppRoutes.login,
+    initialLocation: AppRoutes.home,
     // refreshListenable: sl<AuthNotifier>(),
     // redirect: (context, state) {
     //   final authNotifier = sl<AuthNotifier>();

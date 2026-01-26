@@ -31,16 +31,30 @@ class AppTextTheme {
         height: 20 / 14,
         fontWeight: FontWeight.w400,
         letterSpacing: 0.25,
-        color: c.onSurfaceVariant,
+        color: c.onSurface,
       ),
 
       //* Label
       labelLarge: TextStyle(
+        fontSize: 20,
+        height: 24 / 20,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0.1,
+        color: c.outline,
+      ),
+      labelMedium: TextStyle(
+        fontSize: 16,
+        height: 20 / 16,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0.5,
+        color: c.outline,
+      ),
+      labelSmall: TextStyle(
         fontSize: 14,
         height: 20 / 14,
-        fontWeight: FontWeight.w500,
-        letterSpacing: 0.1,
-        color: c.onPrimary,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0.5,
+        color: c.outline,
       ),
     );
   }
