@@ -27,12 +27,8 @@ ThemeData getLightTheme() {
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(
-          color: AppColors.outlineLight,
-        ), // Force the color here
+        borderSide: BorderSide(color: AppColors.outlineLight),
       ),
-
-      // 3. The border when the field is focused
     ),
 
     //! ElevatedButton

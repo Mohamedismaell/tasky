@@ -4,13 +4,17 @@ import 'package:to_do_app/core/database/cache/cache_helper.dart';
 import 'package:to_do_app/core/injection/service_locator.dart';
 import 'package:to_do_app/core/theme/manager/theme_cubit.dart';
 
+CacheHelper get cacheHelper => sl<CacheHelper>();
+
 class CommonDi {
   CommonDi._();
 
-  static void init() {
+  static Future<void> init() async {
     sl.registerLazySingleton(() => ThemeCubit());
     sl.registerLazySingleton(() => Dio());
     sl.registerLazySingleton(() => DioConsumer(dio: sl<Dio>()));
-    sl.registerLazySingleton(() => CacheHelper());
+    final cacheHelper = CacheHelper();
+    await cacheHelper.init();
+    sl.registerSingleton<CacheHelper>(cacheHelper);
   }
 }

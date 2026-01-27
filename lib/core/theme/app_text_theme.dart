@@ -16,6 +16,20 @@ class AppTextTheme {
         letterSpacing: 0,
         color: c.onSurface,
       ),
+      titleMedium: TextStyle(
+        fontSize: 18,
+        height: 24 / 18,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0.5,
+        color: c.onSurface,
+      ),
+      titleSmall: TextStyle(
+        fontSize: 14,
+        height: 24 / 16,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 0.5,
+        color: c.onSurface,
+      ),
 
       //* Body
       bodyLarge: TextStyle(
@@ -23,7 +37,7 @@ class AppTextTheme {
         height: 24 / 16,
         fontWeight: FontWeight.w400,
         letterSpacing: 0.5,
-        color: c.onSurface,
+        color: c.onPrimary,
       ),
 
       bodyMedium: TextStyle(
@@ -31,7 +45,7 @@ class AppTextTheme {
         height: 20 / 14,
         fontWeight: FontWeight.w400,
         letterSpacing: 0.25,
-        color: c.onSurface,
+        color: c.onPrimary.withOpacity(0.6),
       ),
 
       //* Label

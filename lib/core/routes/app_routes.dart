@@ -1,8 +1,8 @@
 class AppRoutes {
   //! Main Screens
+  static const String welcome = '/welcome';
   static const String home = '/home';
-  // static const String explore = '/explore';
-  // static const String bookmarks = '/bookmarks';
+  static const String addtask = '/addtask';
   // static const String profile = '/profile';
 
   //! Sub Screens

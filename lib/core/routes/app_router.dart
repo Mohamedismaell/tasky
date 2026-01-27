@@ -6,7 +6,7 @@ import '../../features/home/routes/home_routes.dart';
 class AppRouter {
   static GoRouter get router => _router;
   static final GoRouter _router = GoRouter(
-    initialLocation: AppRoutes.home,
+    initialLocation: AppRoutes.welcome,
     // refreshListenable: sl<AuthNotifier>(),
     // redirect: (context, state) {
     //   final authNotifier = sl<AuthNotifier>();

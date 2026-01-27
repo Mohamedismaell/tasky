@@ -16,13 +16,9 @@ ThemeData getDarkTheme() {
 
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppColors.textPrimaryDark,
-      selectionColor: AppColors.textPrimaryDark.withOpacity(
-        0.4,
-      ), // Color when selecting text
-      selectionHandleColor:
-          AppColors.textPrimaryDark, // The tear-drop handle color
+      selectionColor: AppColors.textPrimaryDark.withOpacity(0.4),
+      selectionHandleColor: AppColors.textPrimaryDark,
     ),
-
     inputDecorationTheme: InputDecorationTheme(
       // border: InputBorder.none,
       filled: true,
@@ -48,6 +44,16 @@ ThemeData getDarkTheme() {
           borderRadius: BorderRadius.circular(24.r),
         ),
       ),
+    ),
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) return Colors.white;
+        return Colors.grey;
+      }),
+      trackColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) return AppColors.primaryDark;
+        return AppColors.surfaceDark;
+      }),
     ),
   );
 }

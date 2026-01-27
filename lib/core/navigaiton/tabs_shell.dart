@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/core/helper/size_provider/sized_helper_extension.dart';
-import 'package:to_do_app/features/home/presentation/screens/home_page.dart';
+import 'package:to_do_app/features/home/presentation/screens/welcome_screen.dart';
 
 class TabsShell extends StatefulWidget {
   const TabsShell({super.key});
@@ -51,7 +51,7 @@ class _TabsShellState extends State<TabsShell> {
           //     });
           //   }
           // },
-          children: [const HomePage()],
+          children: [const WelcomeScreen()],
         ),
       ),
     );
