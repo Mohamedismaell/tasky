@@ -8,6 +8,7 @@ import 'package:to_do_app/core/helper/hydrated_storage.dart';
 // import 'package:to_do_app/core/helper/size_provider/size_provider.dart';
 // import 'package:to_do_app/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:to_do_app/core/routes/app_router.dart';
+import 'package:to_do_app/features/home/presentation/manager/cubit/task_validation_cubit.dart';
 import 'core/observers/app_bloc_observer.dart';
 import 'core/injection/service_locator.dart';
 import 'core/theme/manager/theme_cubit.dart';
@@ -39,7 +40,10 @@ class AppBootstrap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => sl<ThemeCubit>())],
+      providers: [
+        BlocProvider(create: (context) => sl<ThemeCubit>()),
+        BlocProvider(create: (context) => sl<TaskValidationCubit>()),
+      ],
       child: const MyApp(),
     );
   }

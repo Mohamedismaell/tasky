@@ -3,6 +3,7 @@ import 'package:to_do_app/core/database/api/dio_consumer.dart';
 import 'package:to_do_app/core/database/cache/cache_helper.dart';
 import 'package:to_do_app/core/injection/service_locator.dart';
 import 'package:to_do_app/core/theme/manager/theme_cubit.dart';
+import 'package:to_do_app/core/utils/validators/form_validators.dart';
 
 CacheHelper get cacheHelper => sl<CacheHelper>();
 
@@ -13,6 +14,7 @@ class CommonDi {
     sl.registerLazySingleton(() => ThemeCubit());
     sl.registerLazySingleton(() => Dio());
     sl.registerLazySingleton(() => DioConsumer(dio: sl<Dio>()));
+    sl.registerLazySingleton(() => FormValidators());
     final cacheHelper = CacheHelper();
     await cacheHelper.init();
     sl.registerSingleton<CacheHelper>(cacheHelper);
