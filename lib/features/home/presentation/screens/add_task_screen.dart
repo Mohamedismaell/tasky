@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/features/home/presentation/manager/cubit/task_validation_cubit.dart';
 import 'package:to_do_app/features/home/presentation/widgets/task_form.dart';
@@ -37,7 +38,10 @@ class AddTaskScreen extends StatelessWidget {
   Widget _buildAddTaskButton(BuildContext context) {
     return BlocListener<TaskValidationCubit, TaskValidationState>(
       listener: (context, state) {
-        // if state
+        if (state is TaskValidationSuccess) {
+          context.pop();
+          context.read<TaskValidationCubit>().reset();
+        }
       },
       child: SizedBox(
         width: double.infinity,

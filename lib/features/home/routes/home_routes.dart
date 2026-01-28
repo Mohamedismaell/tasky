@@ -1,5 +1,7 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:to_do_app/core/routes/app_routes.dart';
+import 'package:to_do_app/features/home/presentation/manager/cubit/task_validation_cubit.dart';
 import 'package:to_do_app/features/home/presentation/screens/add_task_screen.dart';
 import 'package:to_do_app/features/home/presentation/screens/home_screen.dart';
 import 'package:to_do_app/features/home/presentation/screens/welcome_screen.dart';
@@ -12,7 +14,10 @@ class HomeRoutes {
     ),
     GoRoute(
       path: AppRoutes.home,
-      builder: (context, state) => const HomeScreen(),
+      builder: (context, state) {
+        context.read<TaskValidationCubit>().reset();
+        return const HomeScreen();
+      },
     ),
     GoRoute(
       path: AppRoutes.addtask,

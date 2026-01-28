@@ -28,8 +28,8 @@ Future<void> main() async {
 
   await ScreenUtil.ensureScreenSize();
   runApp(
-    DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
-    // AppBootstrap(),
+    // DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
+    AppBootstrap(),
   );
 }
 

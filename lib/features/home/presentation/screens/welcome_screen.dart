@@ -18,37 +18,43 @@ class WelcomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.r),
-          child: SingleChildScrollView(
-            // physics: isKeyboardOpen
-            //     ? const ClampingScrollPhysics()
-            //     : const NeverScrollableScrollPhysics(),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight:
-                    MediaQuery.sizeOf(context).height -
-                    MediaQuery.of(context).padding.top -
-                    MediaQuery.of(context).padding.bottom,
-              ),
-              child: IntrinsicHeight(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    _buildHeader(context),
-                    Spacer(),
-                    _buildBody(context),
-                    Spacer(),
-                    SvgPicture.asset(
-                      'assets/images/work_progress.svg',
-                      width: 215.w,
-                      height: 204.h,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                // physics: isKeyboardOpen
+                //     ? const ClampingScrollPhysics()
+                //     : const NeverScrollableScrollPhysics(),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+
+                    // MediaQuery.sizeOf(context).height -
+                    // MediaQuery.of(context).padding.top -
+                    // MediaQuery.of(context).padding.bottom -
+                    // MediaQuery.of(context).viewInsets.bottom,
+                  ),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        _buildHeader(context),
+                        Spacer(),
+                        _buildBody(context),
+                        Spacer(),
+                        SvgPicture.asset(
+                          'assets/images/work_progress.svg',
+                          width: 215.w,
+                          height: 204.h,
+                        ),
+                        Spacer(),
+                        _UserForm(),
+                        SizedBox(height: 16.h),
+                      ],
                     ),
-                    Spacer(),
-                    _UserForm(),
-                    SizedBox(height: 16.h),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ),
       ),

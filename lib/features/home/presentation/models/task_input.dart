@@ -5,7 +5,23 @@ class TaskInput extends Equatable {
   final String description;
   final bool? priority;
 
-  TaskInput({required this.title, required this.description, this.priority});
+  const TaskInput({
+    required this.title,
+    required this.description,
+    this.priority,
+  });
+
+  factory TaskInput.fromJson(Map<String, dynamic> json) {
+    return TaskInput(
+      title: json['title'],
+      description: json['description'],
+      priority: json['priority'],
+    );
+  }
+  Map<String, dynamic> toJson() {
+    return {'title': title, 'description': description, 'priority': priority};
+  }
+
   @override
   String toString() {
     return 'TaskInput(title: $title, description: $description, priority: $priority)';
