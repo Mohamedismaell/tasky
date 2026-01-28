@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/features/home/presentation/manager/cubit/task_validation_cubit.dart';
 import 'package:to_do_app/features/home/presentation/models/task_input.dart';
-// import 'package:to_do_app/features/home/presentation/models/task_input.dart';
 import 'package:to_do_app/features/home/presentation/widgets/card_container.dart';
 import 'package:to_do_app/features/home/presentation/widgets/text_disabled.dart';
 
@@ -35,7 +34,9 @@ class PriorityTasks extends StatelessWidget {
                       padding: EdgeInsets.only(left: 10.w),
                       child: Text(
                         'My Tasks',
-                        style: context.textTheme.bodyLarge,
+                        style: context.textTheme.bodyLarge!.copyWith(
+                          color: context.colorTheme.primary,
+                        ),
                       ),
                     ),
                     SizedBox(height: 8.h),
@@ -52,29 +53,14 @@ class PriorityTasks extends StatelessWidget {
                                   .read<TaskValidationCubit>()
                                   .updadteChecked(index, value!),
                             ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextDisabled(
-                                    name: true,
-                                    description: false,
-                                    task: currentTask,
-                                    child: Text(
-                                      textAlign: TextAlign.center,
-                                      currentTask.title,
-                                    ),
-                                  ),
-                                  TextDisabled(
-                                    name: false,
-                                    description: true,
-                                    task: currentTask,
-                                    child: Text(
-                                      textAlign: TextAlign.center,
-                                      currentTask.description,
-                                    ),
-                                  ),
-                                ],
+                            SizedBox(width: 4.w),
+                            TextDisabled(
+                              name: true,
+                              description: false,
+                              task: currentTask,
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                currentTask.title,
                               ),
                             ),
                           ],

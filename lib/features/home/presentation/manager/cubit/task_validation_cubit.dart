@@ -41,8 +41,16 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
     tasks[index] = tasks[index].copyWith(isDone: value);
     final taskEncoded = jsonEncode(tasks.map((e) => e.toJson()).toList());
     cacheHelper.saveData(key: 'tasks', value: taskEncoded);
-    print('task.isDone == > ${tasks[index].isDone}');
+    // cacheHelper.removeData(key: 'tasks' , value: taskEncoded);
+    // print('task.isDone == > ${tasks[index].isDone}');
     emit(TaskValidationSuccess(taskInput: tasks[index]));
+    removeTask(index);
+  }
+
+  void removeTask(int index) {
+    tasks.removeAt(index);
+    final taskEncoded = jsonEncode(tasks.map((e) => e.toJson()).toList());
+    cacheHelper.saveData(key: 'tasks', value: taskEncoded);
   }
 
   void submit() {

@@ -14,6 +14,11 @@ ThemeData getDarkTheme() {
     textTheme: responsiveTextTheme,
     scaffoldBackgroundColor: AppColors.backgroundDark,
 
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.transparent,
+      titleTextStyle: AppTextTheme.from(darkColorScheme).titleLarge,
+    ),
+
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppColors.textPrimaryDark,
       selectionColor: AppColors.textPrimaryDark.withOpacity(0.4),

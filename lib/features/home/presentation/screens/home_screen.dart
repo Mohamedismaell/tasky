@@ -6,7 +6,7 @@ import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/routes/app_routes.dart';
 import 'package:to_do_app/core/theme/app_colors.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
-import 'package:to_do_app/features/home/presentation/widgets/all_tasks.dart';
+import 'package:to_do_app/features/home/presentation/widgets/list_tasks.dart';
 import 'package:to_do_app/features/home/presentation/widgets/home_header.dart';
 import 'package:to_do_app/features/home/presentation/widgets/priority_tasks.dart';
 import 'package:to_do_app/features/home/presentation/widgets/progerss.dart';
@@ -57,7 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 8.h),
               PriorityTasks(),
               SizedBox(height: 24.h),
-              AllTasks(),
+              Text('My Tasks', style: context.textTheme.titleLarge),
+              SizedBox(height: 16.h),
+              ListTasks(allTaks: true, toDoTasks: false),
             ],
           ),
         ),

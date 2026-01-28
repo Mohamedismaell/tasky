@@ -13,8 +13,11 @@ class AddTaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Text('New Task'),
+        // backgroundColor: Colors.transparent,
+        title: Align(
+          alignment: AlignmentGeometry.centerLeft,
+          child: Text('New Task'),
+        ),
       ),
       body: SafeArea(
         child: Padding(
