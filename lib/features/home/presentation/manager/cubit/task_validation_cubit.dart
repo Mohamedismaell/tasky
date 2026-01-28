@@ -8,12 +8,17 @@ import 'package:to_do_app/features/home/presentation/models/task_input.dart';
 part 'task_validation_state.dart';
 
 class TaskValidationCubit extends Cubit<TaskValidationState> {
-  TaskValidationCubit(this.validators) : super(TaskValidationInitial());
+  TaskValidationCubit(this.validators) : super(TaskValidationInitial()) {
+    loadFromCacheTasks();
+  }
   final FormValidators validators;
   String taskName = '';
   String taskDescription = '';
   bool taskPriority = false;
-  final List<dynamic> tasks = [];
+  // bool isDone = false;
+  final List<TaskInput> tasks = [];
+  // final List<TaskInput> tasks = cacheHelper.getData(key: 'tasks') ?? [];
+
   void updadteTaskName(String name) {
     taskName = name;
     print('taskName =>> $taskName');
@@ -30,6 +35,14 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
     } else {
       emit(TaskisNotPriority());
     }
+  }
+
+  void updadteChecked(int index, bool value) {
+    tasks[index] = tasks[index].copyWith(isDone: value);
+    final taskEncoded = jsonEncode(tasks.map((e) => e.toJson()).toList());
+    cacheHelper.saveData(key: 'tasks', value: taskEncoded);
+    print('task.isDone == > ${tasks[index].isDone}');
+    emit(TaskValidationSuccess(taskInput: tasks[index]));
   }
 
   void submit() {
@@ -72,13 +85,13 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
     }
   }
 
-  List<dynamic> cacheTasks() {
+  List<TaskInput> loadFromCacheTasks() {
     final tasksEncoded = cacheHelper.getData(key: 'tasks');
     if (tasksEncoded != null) {
       try {
-        final decodedTasks = jsonDecode(tasksEncoded);
-        final lastTasks = decodedTasks
-            .map((e) => TaskInput.fromJson(e))
+        final List<dynamic> decodedTasks = jsonDecode(tasksEncoded);
+        final List<TaskInput> lastTasks = decodedTasks
+            .map((e) => TaskInput.fromJson(e as Map<String, dynamic>))
             .toList();
         tasks.clear();
         tasks.addAll(lastTasks);
@@ -90,5 +103,9 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
     return [];
   }
 
-  void reset() => emit(TaskValidationInitial());
+  void reset() {
+    taskName = '';
+    taskDescription = '';
+    emit(TaskValidationInitial());
+  }
 }

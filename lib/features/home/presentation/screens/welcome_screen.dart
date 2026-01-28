@@ -27,7 +27,6 @@ class WelcomeScreen extends StatelessWidget {
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
                     minHeight: constraints.maxHeight,
-
                     // MediaQuery.sizeOf(context).height -
                     // MediaQuery.of(context).padding.top -
                     // MediaQuery.of(context).padding.bottom -

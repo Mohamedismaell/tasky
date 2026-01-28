@@ -46,5 +46,15 @@ ThemeData getLightTheme() {
         ),
       ),
     ),
+    checkboxTheme: CheckboxThemeData(
+      checkColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) return Colors.white;
+        return Colors.grey;
+      }),
+      fillColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) return Colors.white;
+        return Colors.grey;
+      }),
+    ),
   );
 }

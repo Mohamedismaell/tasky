@@ -5,8 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:to_do_app/core/helper/hydrated_storage.dart';
-// import 'package:to_do_app/core/helper/size_provider/size_provider.dart';
-// import 'package:to_do_app/core/helper/size_provider/sized_helper_extension.dart';
 import 'package:to_do_app/core/routes/app_router.dart';
 import 'package:to_do_app/features/home/presentation/manager/cubit/task_validation_cubit.dart';
 import 'core/observers/app_bloc_observer.dart';
@@ -17,14 +15,17 @@ import 'core/theme/theme_data/light_theme_data.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  print('Step 1: ensureInitialized done');
+  debugPrint('Step 1: ensureInitialized done');
+
   Bloc.observer = AppBlocObserver();
-  print('Step 2: Bloc observer set');
+  debugPrint('Step 2: Bloc observer set');
+
   HydratedBloc.storage = await buildHydratedStorage();
-  print('Step 3: HydratedStorage built');
+  debugPrint('Step 3: HydratedStorage built');
+
   await initializeDependencies();
-  print('Step 4: Service Locator initialized');
-  print('Step 5: Supabase initialized');
+  debugPrint('Step 4: Service Locator initialized');
+  debugPrint('Step 5: Supabase initialized');
 
   await ScreenUtil.ensureScreenSize();
   runApp(
