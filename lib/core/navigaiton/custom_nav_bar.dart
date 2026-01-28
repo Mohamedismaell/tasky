@@ -9,82 +9,49 @@ import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/core/theme/manager/theme_cubit.dart';
 
 class CustomNavBar extends StatelessWidget {
-  const CustomNavBar({super.key, required this.onTap});
+  const CustomNavBar({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  final int currentIndex;
   final void Function(int) onTap;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, themeState) {
-        print('look $themeState');
         return CurvedNavigationBar(
-          // height: 80.h,
+          index: currentIndex,
           backgroundColor: context.colorTheme.outline,
           color: themeState.isLight
               ? AppColors.backgroundLight
               : AppColors.backgroundDark,
           items: [
-            CurvedNavigationBarItem(
-              child: SizedBox(
-                width: 24.w,
-                height: 24.h,
-                child: SvgPicture.asset(
-                  'assets/images/home.svg',
-                  colorFilter: ColorFilter.mode(
-                    context.colorTheme.primary,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
+            _item(
+              context,
+              index: 0,
+              icon: 'assets/images/home.svg',
               label: 'Home',
-              labelStyle: context.textTheme.bodySmall!.copyWith(fontSize: 14),
             ),
-            CurvedNavigationBarItem(
-              child: SizedBox(
-                width: 24.w,
-                height: 24.h,
-                child: SvgPicture.asset(
-                  'assets/images/todo.svg',
-
-                  colorFilter: ColorFilter.mode(
-                    context.colorTheme.primary,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
+            _item(
+              context,
+              index: 1,
+              icon: 'assets/images/todo.svg',
               label: 'To Do',
-              labelStyle: context.textTheme.bodySmall!.copyWith(fontSize: 14),
             ),
-            CurvedNavigationBarItem(
-              child: SizedBox(
-                width: 24.w,
-                height: 24.h,
-                child: SvgPicture.asset(
-                  'assets/images/completed.svg',
-
-                  colorFilter: ColorFilter.mode(
-                    context.colorTheme.primary,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
+            _item(
+              context,
+              index: 2,
+              icon: 'assets/images/completed.svg',
               label: 'Completed',
-              labelStyle: context.textTheme.bodySmall!.copyWith(fontSize: 14),
             ),
-            CurvedNavigationBarItem(
-              child: SizedBox(
-                width: 24.w,
-                height: 24.h,
-                child: SvgPicture.asset(
-                  'assets/images/profile.svg',
-
-                  colorFilter: ColorFilter.mode(
-                    context.colorTheme.primary,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
+            _item(
+              context,
+              index: 3,
+              icon: 'assets/images/profile.svg',
               label: 'Profile',
-              labelStyle: context.textTheme.bodySmall!.copyWith(fontSize: 14),
             ),
           ],
           onTap: onTap,
@@ -92,62 +59,34 @@ class CustomNavBar extends StatelessWidget {
       },
     );
   }
+
+  CurvedNavigationBarItem _item(
+    BuildContext context, {
+    required int index,
+    required String icon,
+    required String label,
+  }) {
+    final isActive = currentIndex == index;
+
+    return CurvedNavigationBarItem(
+      child: SizedBox(
+        width: 24.w,
+        height: 24.h,
+        child: SvgPicture.asset(
+          icon,
+          colorFilter: ColorFilter.mode(
+            isActive ? context.colorTheme.primary : context.colorTheme.outline,
+            BlendMode.srcIn,
+          ),
+        ),
+      ),
+      label: label,
+      labelStyle: context.textTheme.bodySmall!.copyWith(
+        fontSize: 14,
+        color: isActive
+            ? context.colorTheme.primary
+            : context.colorTheme.outline,
+      ),
+    );
+  }
 }
-// CurvedNavigationBar(
-//           backgroundColor: context.colorTheme.outline,
-//           color: themeState.isLight
-//               ? AppColors.backgroundLight
-//               : AppColors.backgroundDark,
-//           items: <Widget>[
-//             SizedBox(
-//               width: 24.w,
-//               height: 24.h,
-//               child: SvgPicture.asset(
-//                 'assets/images/home.svg',
-
-//                 colorFilter: ColorFilter.mode(
-//                   context.colorTheme.primary,
-//                   BlendMode.srcIn,
-//                 ),
-//               ),
-//             ),
-//             SizedBox(
-//               width: 24.w,
-//               height: 24.h,
-//               child: SvgPicture.asset(
-//                 'assets/images/todo.svg',
-
-//                 colorFilter: ColorFilter.mode(
-//                   context.colorTheme.primary,
-//                   BlendMode.srcIn,
-//                 ),
-//               ),
-//             ),
-//             SizedBox(
-//               width: 24.w,
-//               height: 24.h,
-//               child: SvgPicture.asset(
-//                 'assets/images/completed.svg',
-
-//                 colorFilter: ColorFilter.mode(
-//                   context.colorTheme.primary,
-//                   BlendMode.srcIn,
-//                 ),
-//               ),
-//             ),
-
-//             SizedBox(
-//               width: 24.w,
-//               height: 24.h,
-//               child: SvgPicture.asset(
-//                 'assets/images/profile.svg',
-
-//                 colorFilter: ColorFilter.mode(
-//                   context.colorTheme.primary,
-//                   BlendMode.srcIn,
-//                 ),
-//               ),
-//             ),
-//           ],
-//           onTap: onTap,
-//         );

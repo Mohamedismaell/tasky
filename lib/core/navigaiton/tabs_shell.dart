@@ -45,7 +45,10 @@ class _TabsShellState extends State<TabsShell> {
       // backgroundColor: Colors.amberAccent,
       // extendBody: true,
       extendBody: true,
-      bottomNavigationBar: CustomNavBar(onTap: (index) => _onTabTap(index)),
+      bottomNavigationBar: CustomNavBar(
+        onTap: (index) => _onTabTap(index),
+        currentIndex: _currentIndex,
+      ),
 
       body: SafeArea(
         child: Padding(
