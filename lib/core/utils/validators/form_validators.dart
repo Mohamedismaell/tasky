@@ -12,6 +12,8 @@ class FormValidators {
   String? _validateTaskName(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your Task Name';
+    } else if (value.length >= 12) {
+      return 'Please enter at max 12 characters';
     }
     return null;
   }

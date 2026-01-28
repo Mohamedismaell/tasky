@@ -55,8 +55,8 @@ class HomeHeader extends StatelessWidget {
                 onPressed: () => context.read<ThemeCubit>().toggleTheme(),
                 icon: Icon(
                   state.isLight
-                      ? Icons.light_mode_outlined
-                      : Icons.dark_mode_outlined,
+                      ? Icons.dark_mode_outlined
+                      : Icons.light_mode_outlined,
                   size: 18.sp,
                 ),
               ),

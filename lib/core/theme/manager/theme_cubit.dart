@@ -17,9 +17,7 @@ class ThemeCubit extends HydratedCubit<ThemeState> {
   @override
   ThemeState? fromJson(Map<String, dynamic> json) {
     final savedMode = json[_themeMode] as String?;
-    if (savedMode == 'system') {
-      return ThemeState(themeMode: ThemeMode.system);
-    } else if (savedMode == 'light') {
+    if (savedMode == 'light') {
       return ThemeState(themeMode: ThemeMode.light);
     } else if (savedMode == 'dark') {
       return ThemeState(themeMode: ThemeMode.dark);

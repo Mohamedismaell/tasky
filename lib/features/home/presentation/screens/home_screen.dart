@@ -8,6 +8,7 @@ import 'package:to_do_app/core/theme/app_colors.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/features/home/presentation/widgets/all_tasks.dart';
 import 'package:to_do_app/features/home/presentation/widgets/home_header.dart';
+import 'package:to_do_app/features/home/presentation/widgets/priority_tasks.dart';
 import 'package:to_do_app/features/home/presentation/widgets/progerss.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -36,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Hello $userName, Your work Is almost done ! ',
+                      text: 'Hello $userName, Your work Is almost done !  ',
                       style: context.textTheme.titleLarge,
                     ),
                     WidgetSpan(
@@ -52,7 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 16.h),
               Progerss(),
-              SizedBox(height: 16.h),
+              SizedBox(height: 8.h),
+              PriorityTasks(),
+              SizedBox(height: 24.h),
               AllTasks(),
             ],
           ),

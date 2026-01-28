@@ -43,8 +43,8 @@ class ThemeIcon extends StatelessWidget {
                           : Alignment.centerLeft,
                       child: Icon(
                         state.isDark
-                            ? Icons.light_mode_outlined
-                            : Icons.dark_mode_outlined,
+                            ? Icons.dark_mode_outlined
+                            : Icons.light_mode_outlined,
                         color: context.colorTheme.onSurface,
                       ),
                     ),

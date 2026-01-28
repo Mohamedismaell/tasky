@@ -51,10 +51,7 @@ ThemeData getLightTheme() {
         if (states.contains(WidgetState.selected)) return Colors.white;
         return Colors.grey;
       }),
-      fillColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) return Colors.white;
-        return Colors.grey;
-      }),
+      side: BorderSide(width: 3, color: lightColorScheme.outline),
     ),
   );
 }

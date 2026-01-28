@@ -60,10 +60,7 @@ ThemeData getDarkTheme() {
         if (states.contains(WidgetState.selected)) return Colors.white;
         return Colors.grey;
       }),
-      fillColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) return Colors.white;
-        return Colors.grey;
-      }),
+      side: BorderSide(width: 2, color: Colors.grey),
     ),
   );
 }

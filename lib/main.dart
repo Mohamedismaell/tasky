@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:to_do_app/core/helper/hydrated_storage.dart';
+import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/routes/app_router.dart';
 import 'package:to_do_app/features/home/presentation/manager/cubit/task_validation_cubit.dart';
 import 'core/observers/app_bloc_observer.dart';
@@ -27,10 +28,11 @@ Future<void> main() async {
   debugPrint('Step 4: Service Locator initialized');
   debugPrint('Step 5: Supabase initialized');
 
+  cacheHelper.clearData(key: 'tasks');
   await ScreenUtil.ensureScreenSize();
   runApp(
-    // DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
-    AppBootstrap(),
+    DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
+    // AppBootstrap(),
   );
 }
 

@@ -14,21 +14,21 @@ class AppTextTheme {
         height: 28 / 22,
         fontWeight: FontWeight.w400,
         letterSpacing: 0,
-        color: c.onSurface,
+        color: c.onPrimary,
       ),
       titleMedium: TextStyle(
         fontSize: 18,
         height: 24 / 18,
         fontWeight: FontWeight.w400,
         letterSpacing: 0.5,
-        color: c.onSurface,
+        color: c.onPrimary,
       ),
       titleSmall: TextStyle(
         fontSize: 14,
         height: 24 / 16,
         fontWeight: FontWeight.w400,
         letterSpacing: 0.5,
-        color: c.onSurface,
+        color: c.onPrimary,
       ),
 
       //* Body
