@@ -23,9 +23,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
       floatingActionButton: _buildFlotingButton(context),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -66,17 +67,20 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 Widget _buildFlotingButton(BuildContext context) {
-  return ElevatedButton.icon(
-    onPressed: () => context.push(AppRoutes.addtask),
-    icon: Icon(Icons.add),
-    label: Text(
-      'Add New Task',
-      style: context.textTheme.bodyMedium!.copyWith(
-        color: AppColors.textPrimaryDark,
+  return Padding(
+    padding: EdgeInsets.only(bottom: 24.h),
+    child: ElevatedButton.icon(
+      onPressed: () => context.push(AppRoutes.addtask),
+      icon: Icon(Icons.add),
+      label: Text(
+        'Add New Task',
+        style: context.textTheme.bodyMedium!.copyWith(
+          color: AppColors.textPrimaryDark,
+        ),
       ),
-    ),
-    style: ElevatedButton.styleFrom(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+      ),
     ),
   );
 }

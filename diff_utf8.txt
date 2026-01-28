@@ -1,0 +1,346 @@
+﻿diff --git a/lib/core/navigaiton/tabs_shell.dart b/lib/core/navigaiton/tabs_shell.dart
+index 00268a1..6786f7a 100644
+--- a/lib/core/navigaiton/tabs_shell.dart
++++ b/lib/core/navigaiton/tabs_shell.dart
+@@ -1,6 +1,10 @@
+ import 'package:flutter/material.dart';
+-import 'package:to_do_app/core/helper/size_provider/sized_helper_extension.dart';
+-import 'package:to_do_app/features/home/presentation/screens/welcome_screen.dart';
++import 'package:flutter_screenutil/flutter_screenutil.dart';
++import 'package:to_do_app/core/navigaiton/custom_nav_bar.dart';
++import 'package:to_do_app/features/home/presentation/screens/complete_screen.dart';
++import 'package:to_do_app/features/home/presentation/screens/home_screen.dart';
++import 'package:to_do_app/features/home/presentation/screens/profile_screen.dart';
++import 'package:to_do_app/features/home/presentation/screens/todo_screen.dart';
+ 
+ class TabsShell extends StatefulWidget {
+   const TabsShell({super.key});
+@@ -11,23 +15,23 @@ class TabsShell extends StatefulWidget {
+ 
+ class _TabsShellState extends State<TabsShell> {
+   final pageController = PageController();
+-  // int _currentIndex = 0;
++  int _currentIndex = 0;
+ 
+-  // void _onTabTap(int index) {
+-  //   if (!pageController.hasClients) return;
+-  //   final current = pageController.page?.round() ?? _currentIndex;
+-  //   final distance = (index - current).abs();
++  void _onTabTap(int index) {
++    if (!pageController.hasClients) return;
++    final current = pageController.page?.round() ?? _currentIndex;
++    final distance = (index - current).abs();
+ 
+-  //   if (distance >= 1) {
+-  //     int neighbor = index > _currentIndex ? index - 1 : index + 1;
+-  //     pageController.jumpToPage(neighbor);
+-  //   }
+-  //   pageController.animateToPage(
+-  //     index,
+-  //     duration: const Duration(milliseconds: 300),
+-  //     curve: Curves.easeOut,
+-  //   );
+-  // }
++    if (distance >= 1) {
++      int neighbor = index > _currentIndex ? index - 1 : index + 1;
++      pageController.jumpToPage(neighbor);
++    }
++    pageController.animateToPage(
++      index,
++      duration: const Duration(milliseconds: 300),
++      curve: Curves.easeOut,
++    );
++  }
+ 
+   @override
+   void dispose() {
+@@ -38,20 +42,26 @@ class _TabsShellState extends State<TabsShell> {
+   @override
+   Widget build(BuildContext context) {
+     return Scaffold(
++      // extendBody: true,
+       extendBody: true,
+-      backgroundColor: Colors.transparent,
++      bottomNavigationBar: CustomNavBar(onTap: (index) => _onTabTap(index)),
+       body: Padding(
+-        padding: EdgeInsets.symmetric(horizontal: context.setWidth(20)),
++        padding: EdgeInsets.symmetric(horizontal: 16.w),
+         child: PageView(
+           controller: pageController,
+-          // onPageChanged: (index) {
+-          //   if (mounted) {
+-          //     setState(() {
+-          //       _currentIndex = index;
+-          //     });
+-          //   }
+-          // },
+-          children: [const WelcomeScreen()],
++          onPageChanged: (index) {
++            if (mounted) {
++              setState(() {
++                _currentIndex = index;
++              });
++            }
++          },
++          children: [
++            const HomeScreen(),
++            const TodoScreen(),
++            const CompletedScreen(),
++            const ProfileScreen(),
++          ],
+         ),
+       ),
+     );
+diff --git a/lib/core/theme/manager/theme_cubit.dart b/lib/core/theme/manager/theme_cubit.dart
+index 98a296f..ab869eb 100644
+--- a/lib/core/theme/manager/theme_cubit.dart
++++ b/lib/core/theme/manager/theme_cubit.dart
+@@ -1,40 +1,41 @@
++import 'package:equatable/equatable.dart';
+ import 'package:flutter/material.dart';
+ import 'package:hydrated_bloc/hydrated_bloc.dart';
++
+ part 'theme_state.dart';
+ 
+ class ThemeCubit extends HydratedCubit<ThemeState> {
+-  ThemeCubit() : super(ThemeState(themeMode: ThemeMode.system));
++  ThemeCubit() : super(const ThemeState(themeMode: ThemeMode.system));
++
++  static const _themeKey = 'themeMode';
+ 
+   void toggleTheme() {
+-    final newMode = state.themeMode == ThemeMode.light
+-        ? ThemeMode.dark
+-        : ThemeMode.light;
+-    emit(ThemeState(themeMode: newMode));
+-  }
++    final isDark = state.themeMode == ThemeMode.dark;
+ 
+-  final String _themeMode = 'themeMode';
++    emit(ThemeState(themeMode: isDark ? ThemeMode.light : ThemeMode.dark));
++  }
+ 
+   @override
+-  ThemeState? fromJson(Map<String, dynamic> json) {
+-    final savedMode = json[_themeMode] as String?;
+-    if (savedMode == 'light') {
+-      return ThemeState(themeMode: ThemeMode.light);
+-    } else if (savedMode == 'dark') {
+-      return ThemeState(themeMode: ThemeMode.dark);
+-    }
+-
+-    throw UnimplementedError();
++  ThemeState fromJson(Map<String, dynamic> json) {
++    final mode = json[_themeKey] as String?;
++
++    return ThemeState(
++      themeMode: switch (mode) {
++        'light' => ThemeMode.light,
++        'dark' => ThemeMode.dark,
++        _ => ThemeMode.system,
++      },
++    );
+   }
+ 
+   @override
+-  Map<String, dynamic>? toJson(ThemeState newMode) {
+-    if (newMode.themeMode == ThemeMode.system) {
+-      return {'themeMode': 'system'};
+-    } else if (newMode.themeMode == ThemeMode.light) {
+-      return {'themeMode': 'light'};
+-    } else if (newMode.themeMode == ThemeMode.dark) {
+-      return {'themeMode': 'dark'};
+-    }
+-    throw UnimplementedError();
++  Map<String, dynamic> toJson(ThemeState state) {
++    return {
++      _themeKey: switch (state.themeMode) {
++        ThemeMode.light => 'light',
++        ThemeMode.dark => 'dark',
++        ThemeMode.system => 'system',
++      },
++    };
+   }
+ }
+diff --git a/lib/core/theme/manager/theme_state.dart b/lib/core/theme/manager/theme_state.dart
+index 5733e7c..6fd5eeb 100644
+--- a/lib/core/theme/manager/theme_state.dart
++++ b/lib/core/theme/manager/theme_state.dart
+@@ -1,10 +1,13 @@
+ part of 'theme_cubit.dart';
+ 
+-class ThemeState {
++class ThemeState extends Equatable {
+   final ThemeMode themeMode;
+ 
+   const ThemeState({required this.themeMode});
+ 
++  @override
++  List<Object?> get props => [themeMode];
++
+   bool get isDark => themeMode == ThemeMode.dark;
+   bool get isLight => themeMode == ThemeMode.light;
+ }
+diff --git a/lib/features/home/presentation/screens/home_screen.dart b/lib/features/home/presentation/screens/home_screen.dart
+index 64765b9..72bc307 100644
+--- a/lib/features/home/presentation/screens/home_screen.dart
++++ b/lib/features/home/presentation/screens/home_screen.dart
+@@ -23,43 +23,38 @@ class _HomeScreenState extends State<HomeScreen> {
+   @override
+   Widget build(BuildContext context) {
+     return Scaffold(
+-      // floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
++      floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
+       floatingActionButton: _buildFlotingButton(context),
+       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+-      body: SafeArea(
+-        child: Padding(
+-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+-          child: ListView(
+-            children: [
+-              HomeHeader(userName: userName),
+-              SizedBox(height: 16.h),
+-              Text.rich(
++      body: ListView(
++        children: [
++          HomeHeader(userName: userName),
++          SizedBox(height: 16.h),
++          Text.rich(
++            TextSpan(
++              children: [
+                 TextSpan(
+-                  children: [
+-                    TextSpan(
+-                      text: 'Hello $userName, Your work Is almost done !  ',
+-                      style: context.textTheme.titleLarge,
+-                    ),
+-                    WidgetSpan(
+-                      alignment: PlaceholderAlignment.bottom,
+-                      child: SvgPicture.asset(
+-                        'assets/images/waving_hand.svg',
+-                        width: 32.w,
+-                        height: 32.h,
+-                      ),
+-                    ),
+-                  ],
++                  text: 'Hello $userName, Your work Is almost done !  ',
++                  style: context.textTheme.titleLarge,
+                 ),
+-              ),
+-              SizedBox(height: 16.h),
+-              Progerss(),
+-              SizedBox(height: 8.h),
+-              PriorityTasks(),
+-              SizedBox(height: 24.h),
+-              AllTasks(),
+-            ],
++                WidgetSpan(
++                  alignment: PlaceholderAlignment.bottom,
++                  child: SvgPicture.asset(
++                    'assets/images/waving_hand.svg',
++                    width: 32.w,
++                    height: 32.h,
++                  ),
++                ),
++              ],
++            ),
+           ),
+-        ),
++          SizedBox(height: 16.h),
++          Progerss(),
++          SizedBox(height: 8.h),
++          PriorityTasks(),
++          SizedBox(height: 24.h),
++          AllTasks(),
++        ],
+       ),
+     );
+   }
+diff --git a/lib/features/home/routes/home_routes.dart b/lib/features/home/routes/home_routes.dart
+index 4648af1..bbc2589 100644
+--- a/lib/features/home/routes/home_routes.dart
++++ b/lib/features/home/routes/home_routes.dart
+@@ -1,5 +1,7 @@
++import 'package:flutter/material.dart';
+ import 'package:flutter_bloc/flutter_bloc.dart';
+ import 'package:go_router/go_router.dart';
++import 'package:to_do_app/core/navigaiton/tabs_shell.dart';
+ import 'package:to_do_app/core/routes/app_routes.dart';
+ import 'package:to_do_app/features/home/presentation/manager/cubit/task_validation_cubit.dart';
+ import 'package:to_do_app/features/home/presentation/screens/add_task_screen.dart';
+@@ -16,12 +18,8 @@ class HomeRoutes {
+       path: AppRoutes.home,
+       builder: (context, state) {
+         context.read<TaskValidationCubit>().reset();
+-        return const HomeScreen();
++        return const TabsShell();
+       },
+     ),
+-    GoRoute(
+-      path: AppRoutes.addtask,
+-      builder: (context, state) => const AddTaskScreen(),
+-    ),
+   ];
+ }
+diff --git a/lib/main.dart b/lib/main.dart
+index 1114779..d504a4f 100644
+--- a/lib/main.dart
++++ b/lib/main.dart
+@@ -28,7 +28,7 @@ Future<void> main() async {
+   debugPrint('Step 4: Service Locator initialized');
+   debugPrint('Step 5: Supabase initialized');
+ 
+-  cacheHelper.clearData(key: 'tasks');
++  // cacheHelper.clearData(key: 'tasks');
+   await ScreenUtil.ensureScreenSize();
+   runApp(
+     DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
+diff --git a/pubspec.lock b/pubspec.lock
+index cd2d98a..6a1351b 100644
+--- a/pubspec.lock
++++ b/pubspec.lock
+@@ -97,6 +97,14 @@ packages:
+       url: "https://pub.dev"
+     source: hosted
+     version: "3.0.7"
++  curved_labeled_navigation_bar:
++    dependency: "direct main"
++    description:
++      name: curved_labeled_navigation_bar
++      sha256: "936d8a34128478498e330588dbed3fdd7a6cc55ebada6e67340c080387e1a37e"
++      url: "https://pub.dev"
++    source: hosted
++    version: "2.0.6"
+   data_connection_checker_tv:
+     dependency: "direct main"
+     description:
+@@ -674,6 +682,14 @@ packages:
+       url: "https://pub.dev"
+     source: hosted
+     version: "1.4.0"
++  universal_io:
++    dependency: transitive
++    description:
++      name: universal_io
++      sha256: f63cbc48103236abf48e345e07a03ce5757ea86285ed313a6a032596ed9301e2
++      url: "https://pub.dev"
++    source: hosted
++    version: "2.3.1"
+   uuid:
+     dependency: transitive
+     description:
+diff --git a/pubspec.yaml b/pubspec.yaml
+index 78c9c90..081fa5e 100644
+--- a/pubspec.yaml
++++ b/pubspec.yaml
+@@ -31,7 +31,9 @@ dependencies:
+   #ui
+   flutter_svg: ^2.2.3
+   animations: ^2.1.1
+-
++  # glaze_nav_bar: ^1.2.1
++  # curved_navigation_bar: ^1.0.6
++  curved_labeled_navigation_bar: ^2.0.6
+   #responsive
+   flutter_screenutil: ^5.9.3
+ dev_dependencies:

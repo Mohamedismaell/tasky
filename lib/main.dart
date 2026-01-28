@@ -28,7 +28,7 @@ Future<void> main() async {
   debugPrint('Step 4: Service Locator initialized');
   debugPrint('Step 5: Supabase initialized');
 
-  cacheHelper.clearData(key: 'tasks');
+  // cacheHelper.clearData(key: 'tasks');
   await ScreenUtil.ensureScreenSize();
   runApp(
     DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
