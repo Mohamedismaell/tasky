@@ -30,13 +30,7 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ImageProfileAvatar(),
-              SizedBox(height: 8.h),
-              Text(userName, style: context.textTheme.titleLarge),
-              SizedBox(height: 2.h),
-              Text(
-                'One task at a time. One step closer.',
-                style: context.textTheme.bodyMedium,
-              ),
+
               SizedBox(height: 24.h),
               Align(
                 alignment: Alignment.centerLeft,

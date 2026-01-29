@@ -29,6 +29,8 @@ Future<void> main() async {
   debugPrint('Step 4: Service Locator initialized');
   debugPrint('Step 5: Supabase initialized');
 
+  // cacheHelper.clearData(key: 'userDetails');
+
   // cacheHelper.clearData(key: 'tasks');
   // cacheHelper.clearData(key: 'removedindex');
 

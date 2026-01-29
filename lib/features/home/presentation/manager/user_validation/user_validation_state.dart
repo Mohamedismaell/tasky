@@ -2,7 +2,7 @@ part of 'user_validation_cubit.dart';
 
 sealed class UserValidationState extends Equatable {
   const UserValidationState({required this.userDetails});
-  final List<UserDetailsModel> userDetails;
+  final UserDetailsModel userDetails;
   @override
   List<Object?> get props => [userDetails];
 }

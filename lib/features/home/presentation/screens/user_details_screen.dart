@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/core/widget/custom_text_form_field.dart';
-import 'package:to_do_app/features/home/presentation/manager/task_validation/task_validation_cubit.dart';
 import 'package:to_do_app/features/home/presentation/manager/user_validation/user_validation_cubit.dart';
 
 class UserDetailsScreen extends StatelessWidget {
@@ -40,7 +39,7 @@ class UserDetailsScreen extends StatelessWidget {
                   CustomTextFormField(
                     hinttext: 'Mohamed Ismael',
                     taskNameError: userNameError,
-                    onChanged: userValidationCubit.updadteUserName,
+                    onChanged: userValidationCubit.updateUserName,
                   ),
                   SizedBox(height: 20.h),
                   Text(
@@ -52,7 +51,7 @@ class UserDetailsScreen extends StatelessWidget {
                     child: CustomTextFormField(
                       hinttext: 'One task at a time. One step closer',
                       taskNameError: quoteError,
-                      onChanged: userValidationCubit.updadteMotivationQuote,
+                      onChanged: userValidationCubit.updateMotivationQuote,
                       maxLines: 4,
                     ),
                   ),

@@ -11,7 +11,11 @@ part 'user_validation_state.dart';
 
 class UserValidationCubit extends Cubit<UserValidationState> {
   UserValidationCubit(this.validators)
-    : super(UserValidationInitial(userDetails: [])) {
+    : super(
+        UserValidationInitial(
+          userDetails: UserDetailsModel(userName: '', motivationQuote: ''),
+        ),
+      ) {
     _loadUserDetails();
   }
 
@@ -19,11 +23,11 @@ class UserValidationCubit extends Cubit<UserValidationState> {
   String userName = cacheHelper.getData(key: 'userName') ?? '';
   String motivationQuote = cacheHelper.getData(key: 'motivationQuote') ?? '';
 
-  void updadteUserName(String value) {
+  void updateUserName(String value) {
     userName = value;
   }
 
-  void updadteMotivationQuote(String value) {
+  void updateMotivationQuote(String value) {
     motivationQuote = value;
   }
 
@@ -47,11 +51,9 @@ class UserValidationCubit extends Cubit<UserValidationState> {
       );
       return;
     }
-
-    final updatedUserDetails = List<UserDetailsModel>.from(state.userDetails);
-
-    updatedUserDetails.add(
-      UserDetailsModel(userName: userName, motivationQuote: motivationQuote),
+    final updatedUserDetails = UserDetailsModel(
+      userName: userName,
+      motivationQuote: motivationQuote,
     );
 
     _persist(updatedUserDetails);
@@ -59,24 +61,31 @@ class UserValidationCubit extends Cubit<UserValidationState> {
     emit(UserValidationSuccess(userDetails: updatedUserDetails));
 
     _resetForm();
-    _resetForm();
   }
 
-  void _persist(List<UserDetailsModel> userDetails) {
-    final encoded = jsonEncode(userDetails.map((e) => e.toJson()).toList());
+  void _persist(UserDetailsModel userDetails) {
+    final encoded = jsonEncode(userDetails.toJson());
     cacheHelper.saveData(key: 'userDetails', value: encoded);
   }
 
   void _loadUserDetails() {
     final encoded = cacheHelper.getData(key: 'userDetails');
-    if (encoded == null) return;
+    if (encoded == null || encoded is! String) return;
 
-    final decoded = jsonDecode(encoded) as List;
-    final userDetails = decoded
-        .map((e) => UserDetailsModel.fromJson(e as Map<String, dynamic>))
-        .toList();
-
-    emit(UserValidationInitial(userDetails: userDetails));
+    try {
+      final decoded = jsonDecode(encoded);
+      if (decoded is Map<String, dynamic>) {
+        final userDetails = UserDetailsModel.fromJson(decoded);
+        print('userDetails is here  === >>> $userDetails');
+        emit(UserValidationInitial(userDetails: userDetails));
+      } else {
+        // Invalid data format - clear it
+        cacheHelper.removeData(key: 'userDetails');
+      }
+    } catch (e) {
+      print('Error parsing userDetails: $e');
+      cacheHelper.removeData(key: 'userDetails');
+    }
   }
 
   void _resetForm() {
