@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 24.h),
               Text('My Tasks', style: context.textTheme.titleLarge),
               SizedBox(height: 16.h),
-              ListTasks(allTaks: true, toDoTasks: false),
+              ListTasks(allTaks: true, toDoTasks: false, completedTasks: false),
             ],
           ),
         ),

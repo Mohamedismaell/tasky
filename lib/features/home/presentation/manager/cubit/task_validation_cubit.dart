@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:to_do_app/core/enums/validation_type.dart';
@@ -21,7 +20,7 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
   String taskDescription = '';
   bool taskPriority = false;
 
-  // 🔹 EDITING (null = add mode)
+  // null = add mode
   int? editingTaskId;
 
   void updadteTaskName(String value) {
@@ -77,7 +76,7 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
     final updatedTasks = List<TaskInput>.from(state.tasks);
 
     // if (editingTaskId == null) {
-    //   // ➕ ADD
+    //   //  ADD
     updatedTasks.add(
       TaskInput(
         id: DateTime.now().millisecondsSinceEpoch,
@@ -87,7 +86,7 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
       ),
     );
     // } else {
-    // ✏️ UPDATE
+    //  UPDATE
     // print('Update here === >');/
     // final index = updatedTasks.indexWhere((t) => t.id == editingTaskId);
     // if (index != -1) {

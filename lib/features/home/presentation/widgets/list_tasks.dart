@@ -8,9 +8,15 @@ import 'package:to_do_app/features/home/presentation/widgets/card_container.dart
 import 'package:to_do_app/features/home/presentation/widgets/text_disabled.dart';
 
 class ListTasks extends StatelessWidget {
-  const ListTasks({super.key, required this.allTaks, required this.toDoTasks});
+  const ListTasks({
+    super.key,
+    required this.allTaks,
+    required this.toDoTasks,
+    required this.completedTasks,
+  });
   final bool allTaks;
   final bool toDoTasks;
+  final bool completedTasks;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TaskValidationCubit, TaskValidationState>(
@@ -18,6 +24,9 @@ class ListTasks extends StatelessWidget {
         List<TaskInput> tasks = state.tasks;
         if (toDoTasks) {
           tasks = tasks.where((task) => !task.isDone).toList();
+        }
+        if (completedTasks) {
+          tasks = tasks.where((task) => task.isDone).toList();
         }
 
         return Column(
