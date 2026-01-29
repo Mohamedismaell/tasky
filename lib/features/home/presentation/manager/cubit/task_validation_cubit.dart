@@ -1,119 +1,158 @@
 import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:to_do_app/core/enums/validation_type.dart';
 import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/utils/validators/form_validators.dart';
 import 'package:to_do_app/features/home/presentation/models/task_input.dart';
+
 part 'task_validation_state.dart';
 
 class TaskValidationCubit extends Cubit<TaskValidationState> {
-  TaskValidationCubit(this.validators) : super(TaskValidationInitial()) {
-    loadFromCacheTasks();
+  TaskValidationCubit(this.validators)
+    : super(const TaskValidationInitial(tasks: [])) {
+    _loadTasks();
   }
+
   final FormValidators validators;
+
   String taskName = '';
   String taskDescription = '';
   bool taskPriority = false;
-  // bool isDone = false;
-  final List<TaskInput> tasks = [];
-  // final List<TaskInput> tasks = cacheHelper.getData(key: 'tasks') ?? [];
 
-  void updadteTaskName(String name) {
-    taskName = name;
-    print('taskName =>> $taskName');
+  // 🔹 EDITING (null = add mode)
+  int? editingTaskId;
+
+  void updadteTaskName(String value) {
+    taskName = value;
   }
 
-  void updadteTaskDescription(String description) {
-    taskDescription = description;
+  void updadteTaskDescription(String value) {
+    taskDescription = value;
   }
 
-  void updadteTaskPriority(bool priority) {
-    taskPriority = priority;
-    if (priority) {
-      emit(TaskisPriority());
-    } else {
-      emit(TaskisNotPriority());
-    }
+  void updadteTaskPriority(bool value) {
+    taskPriority = value;
+    emit(
+      value
+          ? TaskisPriority(tasks: state.tasks)
+          : TaskisNotPriority(tasks: state.tasks),
+    );
   }
 
-  void updadteChecked(int index, bool value) {
-    tasks[index] = tasks[index].copyWith(isDone: value);
-    final taskEncoded = jsonEncode(tasks.map((e) => e.toJson()).toList());
-    cacheHelper.saveData(key: 'tasks', value: taskEncoded);
-    // cacheHelper.removeData(key: 'tasks' , value: taskEncoded);
-    // print('task.isDone == > ${tasks[index].isDone}');
-    emit(TaskValidationSuccess(taskInput: tasks[index]));
-    removeTask(index);
-  }
+  // void startEdit(TaskInput task) {
+  //   editingTaskId = task.id;
+  //   taskName = task.title;
+  //   taskDescription = task.description;
+  //   taskPriority = task.priority;
+  // }
 
-  void removeTask(int index) {
-    tasks.removeAt(index);
-    final taskEncoded = jsonEncode(tasks.map((e) => e.toJson()).toList());
-    cacheHelper.saveData(key: 'tasks', value: taskEncoded);
-  }
+  // void cancelEdit() {
+  //   _resetForm();
+  //   emit(TaskValidationInitial(tasks: state.tasks));
+  // }
 
   void submit() {
-    final validateTaskName = validators.getValidator(
+    final nameError = validators.getValidator(
       ValidationType.taskName,
       taskName,
     );
-    final validateTaskDescription = validators.getValidator(
+    final descError = validators.getValidator(
       ValidationType.taskDescription,
       taskDescription,
     );
-    if (validateTaskName == null && validateTaskDescription == null) {
-      tasks.add(
-        TaskInput(
-          title: taskName,
-          description: taskDescription,
-          priority: taskPriority,
-        ),
-      );
-      // cacheHelper.clearData(key: 'tasks');
-      final taskEncoded = jsonEncode(tasks.map((e) => e.toJson()).toList());
-      // print('taskEncoded == >$taskEncoded');
-      cacheHelper.saveData(key: 'tasks', value: taskEncoded);
-      emit(
-        TaskValidationSuccess(
-          taskInput: TaskInput(
-            title: taskName,
-            description: taskDescription,
-            priority: taskPriority,
-          ),
-        ),
-      );
-    } else {
+
+    if (nameError != null || descError != null) {
       emit(
         TaskValidationFailure(
-          taskNameError: validateTaskName,
-          taskDescriptionError: validateTaskDescription,
+          tasks: state.tasks,
+          taskNameError: nameError,
+          taskDescriptionError: descError,
         ),
       );
+      return;
     }
+
+    final updatedTasks = List<TaskInput>.from(state.tasks);
+
+    // if (editingTaskId == null) {
+    //   // ➕ ADD
+    updatedTasks.add(
+      TaskInput(
+        id: DateTime.now().millisecondsSinceEpoch,
+        title: taskName,
+        description: taskDescription,
+        priority: taskPriority,
+      ),
+    );
+    // } else {
+    // ✏️ UPDATE
+    // print('Update here === >');/
+    // final index = updatedTasks.indexWhere((t) => t.id == editingTaskId);
+    // if (index != -1) {
+    //   updatedTasks[index] = updatedTasks[index].copyWith(
+    //     title: taskName,
+    //     description: taskDescription,
+    //     priority: taskPriority,
+    //   );
+    // }
+    // }
+
+    _persist(updatedTasks);
+
+    emit(TaskValidationSuccess(tasks: updatedTasks));
+
+    _resetForm();
   }
 
-  List<TaskInput> loadFromCacheTasks() {
-    final tasksEncoded = cacheHelper.getData(key: 'tasks');
-    if (tasksEncoded != null) {
-      try {
-        final List<dynamic> decodedTasks = jsonDecode(tasksEncoded);
-        final List<TaskInput> lastTasks = decodedTasks
-            .map((e) => TaskInput.fromJson(e as Map<String, dynamic>))
-            .toList();
-        tasks.clear();
-        tasks.addAll(lastTasks);
-        return tasks;
-      } catch (e) {
-        return [];
+  void updateChecked(int taskId, bool value) {
+    final updatedTasks = state.tasks.map((task) {
+      if (task.id == taskId) {
+        return task.copyWith(isDone: value);
       }
-    }
-    return [];
+      return task;
+    }).toList();
+
+    _persist(updatedTasks);
+    emit(TaskValidationInitial(tasks: updatedTasks));
+  }
+
+  void removeTask(int taskId) {
+    final updatedTasks = state.tasks
+        .where((task) => task.id != taskId)
+        .toList();
+
+    _persist(updatedTasks);
+    emit(TaskValidationInitial(tasks: updatedTasks));
+  }
+
+  void _persist(List<TaskInput> tasks) {
+    final encoded = jsonEncode(tasks.map((e) => e.toJson()).toList());
+    cacheHelper.saveData(key: 'tasks', value: encoded);
+  }
+
+  void _loadTasks() {
+    final encoded = cacheHelper.getData(key: 'tasks');
+    if (encoded == null) return;
+
+    final decoded = jsonDecode(encoded) as List;
+    final tasks = decoded
+        .map((e) => TaskInput.fromJson(e as Map<String, dynamic>))
+        .toList();
+
+    emit(TaskValidationInitial(tasks: tasks));
+  }
+
+  void _resetForm() {
+    taskName = '';
+    taskDescription = '';
+    taskPriority = false;
+    editingTaskId = null;
   }
 
   void reset() {
-    taskName = '';
-    taskDescription = '';
-    emit(TaskValidationInitial());
+    _resetForm();
+    emit(TaskValidationInitial(tasks: state.tasks));
   }
 }

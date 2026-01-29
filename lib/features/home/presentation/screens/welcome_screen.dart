@@ -171,7 +171,7 @@ class _UserFormState extends State<_UserForm> {
                 );
                 nameController.clear();
                 // ignore: use_build_context_synchronously
-                validate ? context.push(AppRoutes.home) : null;
+                validate ? context.go(AppRoutes.home) : null;
               },
               child: Text(
                 'Let’s Get Started',

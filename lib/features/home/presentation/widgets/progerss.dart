@@ -13,7 +13,7 @@ class Progerss extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TaskValidationCubit, TaskValidationState>(
       builder: (context, state) {
-        final List<TaskInput> tasks = context.read<TaskValidationCubit>().tasks;
+        final List<TaskInput> tasks = state.tasks;
         // print(tasks.map((e) => print(e)));
 
         final doneTasks = tasks.where((task) => task.isDone).toList();

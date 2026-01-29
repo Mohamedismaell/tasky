@@ -1,33 +1,40 @@
 part of 'task_validation_cubit.dart';
 
 sealed class TaskValidationState extends Equatable {
-  const TaskValidationState();
+  final List<TaskInput> tasks;
+
+  const TaskValidationState({required this.tasks});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [tasks];
 }
 
-final class TaskValidationInitial extends TaskValidationState {}
+final class TaskValidationInitial extends TaskValidationState {
+  const TaskValidationInitial({required super.tasks});
+}
 
-final class TaskisPriority extends TaskValidationState {}
+final class TaskisPriority extends TaskValidationState {
+  const TaskisPriority({required super.tasks});
+}
 
-final class TaskisNotPriority extends TaskValidationState {}
-
-final class TaskValidationSuccess extends TaskValidationState {
-  final TaskInput taskInput;
-
-  const TaskValidationSuccess({required this.taskInput});
-
-  @override
-  List<Object?> get props => [taskInput];
+final class TaskisNotPriority extends TaskValidationState {
+  const TaskisNotPriority({required super.tasks});
 }
 
 final class TaskValidationFailure extends TaskValidationState {
   final String? taskNameError;
   final String? taskDescriptionError;
 
-  const TaskValidationFailure({this.taskNameError, this.taskDescriptionError});
+  const TaskValidationFailure({
+    required super.tasks,
+    this.taskNameError,
+    this.taskDescriptionError,
+  });
 
   @override
-  List<Object?> get props => [taskNameError, taskDescriptionError];
+  List<Object?> get props => [tasks, taskNameError, taskDescriptionError];
+}
+
+final class TaskValidationSuccess extends TaskValidationState {
+  const TaskValidationSuccess({required super.tasks});
 }

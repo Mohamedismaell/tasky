@@ -14,9 +14,7 @@ class PriorityTasks extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TaskValidationCubit, TaskValidationState>(
       builder: (context, state) {
-        final List<TaskInput> allTasks = context
-            .read<TaskValidationCubit>()
-            .tasks;
+        final List<TaskInput> allTasks = state.tasks;
         final List<TaskInput> priorityTasks = allTasks
             .where((task) => task.priority)
             .toList();
@@ -51,7 +49,7 @@ class PriorityTasks extends StatelessWidget {
                               value: currentTask.isDone,
                               onChanged: (value) => context
                                   .read<TaskValidationCubit>()
-                                  .updadteChecked(index, value!),
+                                  .updateChecked(currentTask.id, value!),
                             ),
                             SizedBox(width: 4.w),
                             TextDisabled(

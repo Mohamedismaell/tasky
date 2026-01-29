@@ -15,7 +15,7 @@ class ListTasks extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TaskValidationCubit, TaskValidationState>(
       builder: (context, state) {
-        List<TaskInput> tasks = context.read<TaskValidationCubit>().tasks;
+        List<TaskInput> tasks = state.tasks;
         if (toDoTasks) {
           tasks = tasks.where((task) => !task.isDone).toList();
         }
@@ -44,7 +44,7 @@ class ListTasks extends StatelessWidget {
                           value: currentTask.isDone,
                           onChanged: (value) => context
                               .read<TaskValidationCubit>()
-                              .updadteChecked(index, value!),
+                              .updateChecked(currentTask.id, value!),
                         ),
                         Expanded(
                           child: Column(

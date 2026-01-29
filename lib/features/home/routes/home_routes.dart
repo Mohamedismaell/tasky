@@ -15,7 +15,7 @@ class HomeRoutes {
     GoRoute(
       path: AppRoutes.home,
       builder: (context, state) {
-        context.read<TaskValidationCubit>().reset();
+        // context.read<TaskValidationCubit>().reset();
         return const TabsShell();
       },
     ),
