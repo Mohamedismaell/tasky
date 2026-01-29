@@ -15,6 +15,10 @@ ThemeData getLightTheme() {
     textTheme: responsiveTextTheme,
     scaffoldBackgroundColor: AppColors.backgroundLight,
 
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.transparent,
+      titleTextStyle: AppTextTheme.from(lightColorScheme).titleLarge,
+    ),
     //! input
     inputDecorationTheme: InputDecorationTheme(
       // border: InputBorder.none,

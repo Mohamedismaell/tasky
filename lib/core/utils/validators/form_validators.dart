@@ -25,13 +25,13 @@ class FormValidators {
     return null;
   }
 
-  String? getValidator(ValidationType validationType, String? value) {
+  String? getValidator(TaskValidationType validationType, String? value) {
     switch (validationType) {
-      case ValidationType.fullName:
+      case TaskValidationType.fullName:
         return _validateFullName(value);
-      case ValidationType.taskName:
+      case TaskValidationType.taskName:
         return _validateTaskName(value);
-      case ValidationType.taskDescription:
+      case TaskValidationType.taskDescription:
         return _validateTaskDescription(value);
     }
   }

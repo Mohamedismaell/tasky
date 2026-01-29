@@ -1,1 +1,3 @@
-enum ValidationType { fullName, taskName, taskDescription }
+enum TaskValidationType { fullName, taskName, taskDescription }
+
+enum UserValidationType { username, motivationQuote }

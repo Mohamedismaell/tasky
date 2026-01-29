@@ -7,7 +7,8 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:to_do_app/core/helper/hydrated_storage.dart';
 import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/routes/app_router.dart';
-import 'package:to_do_app/features/home/presentation/manager/cubit/task_validation_cubit.dart';
+import 'package:to_do_app/features/home/presentation/manager/task_validation/task_validation_cubit.dart';
+import 'package:to_do_app/features/home/presentation/manager/user_validation/user_validation_cubit.dart';
 import 'core/observers/app_bloc_observer.dart';
 import 'core/injection/service_locator.dart';
 import 'core/theme/manager/theme_cubit.dart';
@@ -48,6 +49,7 @@ class AppBootstrap extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => sl<ThemeCubit>()),
         BlocProvider(create: (context) => sl<TaskValidationCubit>()),
+        BlocProvider(create: (context) => sl<UserValidationCubit>()),
       ],
       child: const MyApp(),
     );

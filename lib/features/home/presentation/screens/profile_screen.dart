@@ -5,6 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/core/theme/manager/theme_cubit.dart';
+import 'package:to_do_app/features/home/presentation/screens/user_details_screen.dart';
+import 'package:to_do_app/features/home/presentation/widgets/image_profile_avatar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -27,32 +29,7 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Stack(
-                alignment: Alignment.bottomRight,
-                children: [
-                  CircleAvatar(
-                    radius: 50.sp,
-                    backgroundColor: Colors.transparent,
-                    child: ClipOval(
-                      child: SvgPicture.asset(
-                        'assets/images/work_progress.svg',
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: 34.w,
-                      height: 34.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: context.colorTheme.surface,
-                      ),
-                      child: Icon(Icons.camera_alt_outlined, size: 18.sp),
-                    ),
-                  ),
-                ],
-              ),
+              ImageProfileAvatar(),
               SizedBox(height: 8.h),
               Text(userName, style: context.textTheme.titleLarge),
               SizedBox(height: 2.h),
@@ -113,7 +90,14 @@ Widget _buildProfileItem(
   bool isLogout,
 ) {
   return GestureDetector(
-    onTap: () {},
+    onTap: () {
+      if (isDetails) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const UserDetailsScreen()),
+        );
+      }
+    },
     child: Row(
       children: [
         isDetails

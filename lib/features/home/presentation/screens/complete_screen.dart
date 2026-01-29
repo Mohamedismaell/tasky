@@ -7,7 +7,6 @@ class CompletedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('completed screen');
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Colors.transparent,
@@ -19,9 +18,7 @@ class CompletedScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         child: ListView(
-          children: [
-            ListTasks(allTaks: false, toDoTasks: false, completedTasks: true),
-          ],
+          children: [ListTasks(toDoTasks: false, completedTasks: true)],
         ),
       ),
     );

@@ -54,11 +54,11 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
 
   void submit() {
     final nameError = validators.getValidator(
-      ValidationType.taskName,
+      TaskValidationType.taskName,
       taskName,
     );
     final descError = validators.getValidator(
-      ValidationType.taskDescription,
+      TaskValidationType.taskDescription,
       taskDescription,
     );
 

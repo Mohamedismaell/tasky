@@ -6,7 +6,7 @@ import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/routes/app_routes.dart';
 import 'package:to_do_app/core/theme/app_colors.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
-import 'package:to_do_app/features/home/presentation/widgets/list_tasks.dart';
+import 'package:to_do_app/features/home/presentation/widgets/custom_list_tasks.dart';
 import 'package:to_do_app/features/home/presentation/widgets/home_header.dart';
 import 'package:to_do_app/features/home/presentation/widgets/priority_tasks.dart';
 import 'package:to_do_app/features/home/presentation/widgets/progerss.dart';
@@ -30,36 +30,40 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: ListView(
-            children: [
-              HomeHeader(userName: userName),
-              SizedBox(height: 16.h),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Hello $userName, Your work Is almost done !  ',
-                      style: context.textTheme.titleLarge,
-                    ),
-                    WidgetSpan(
-                      alignment: PlaceholderAlignment.bottom,
-                      child: SvgPicture.asset(
-                        'assets/images/waving_hand.svg',
-                        width: 32.w,
-                        height: 32.h,
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(child: HomeHeader(userName: userName)),
+              SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+              SliverToBoxAdapter(
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Hello $userName, Your work Is almost done !  ',
+                        style: context.textTheme.titleLarge,
                       ),
-                    ),
-                  ],
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.bottom,
+                        child: SvgPicture.asset(
+                          'assets/images/waving_hand.svg',
+                          width: 32.w,
+                          height: 32.h,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(height: 16.h),
-              Progerss(),
-              SizedBox(height: 8.h),
-              PriorityTasks(),
-              SizedBox(height: 24.h),
-              Text('My Tasks', style: context.textTheme.titleLarge),
-              SizedBox(height: 16.h),
-              ListTasks(allTaks: true, toDoTasks: false, completedTasks: false),
+              SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+              SliverToBoxAdapter(child: Progerss()),
+              SliverToBoxAdapter(child: SizedBox(height: 8.h)),
+              SliverToBoxAdapter(child: PriorityTasks()),
+              SliverToBoxAdapter(child: SizedBox(height: 24.h)),
+              SliverToBoxAdapter(
+                child: Text('My Tasks', style: context.textTheme.titleLarge),
+              ),
+              SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+              CustomeListTasks(allTaks: true),
             ],
           ),
         ),

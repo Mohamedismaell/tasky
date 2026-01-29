@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
-import 'package:to_do_app/features/home/presentation/manager/cubit/task_validation_cubit.dart';
+import 'package:to_do_app/features/home/presentation/manager/task_validation/task_validation_cubit.dart';
 import 'package:to_do_app/features/home/presentation/models/task_input.dart';
 import 'package:to_do_app/features/home/presentation/widgets/card_container.dart';
 import 'package:to_do_app/features/home/presentation/widgets/text_disabled.dart';

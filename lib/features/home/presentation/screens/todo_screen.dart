@@ -18,9 +18,7 @@ class TodoScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         child: ListView(
-          children: [
-            ListTasks(allTaks: false, toDoTasks: true, completedTasks: false),
-          ],
+          children: [ListTasks(toDoTasks: true, completedTasks: false)],
         ),
       ),
     );

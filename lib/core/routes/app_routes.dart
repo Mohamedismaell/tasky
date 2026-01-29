@@ -3,7 +3,7 @@ class AppRoutes {
   static const String welcome = '/welcome';
   static const String home = '/home';
   static const String addtask = '/addtask';
-  // static const String profile = '/profile';
+  static const String userdetails = '/userdetails';
 
   //! Sub Screens
   static const String bookDetails = '/bookDetails/:bookId';

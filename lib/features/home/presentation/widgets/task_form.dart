@@ -2,29 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
-import 'package:to_do_app/features/home/presentation/manager/cubit/task_validation_cubit.dart';
+import 'package:to_do_app/core/widget/custom_text_form_field.dart';
+import 'package:to_do_app/features/home/presentation/manager/task_validation/task_validation_cubit.dart';
 
-class TaskForm extends StatefulWidget {
+class TaskForm extends StatelessWidget {
   const TaskForm({super.key});
-
-  @override
-  State<TaskForm> createState() => _TaskFormState();
-}
-
-class _TaskFormState extends State<TaskForm> {
-  late final GlobalKey<FormState> formKey;
-
-  @override
-  void initState() {
-    formKey = GlobalKey<FormState>();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    formKey.currentState?.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,30 +20,25 @@ class _TaskFormState extends State<TaskForm> {
           descriptionError = state.taskDescriptionError;
         }
         return Form(
-          key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Task Name', style: context.textTheme.titleSmall),
+              Text('Task Name', style: context.textTheme.titleMedium),
               SizedBox(height: 8.h),
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Finish UI design for login screen...',
-                  errorText: taskNameError,
-                ),
+              CustomTextFormField(
+                hinttext: 'Finish UI design for login screen...',
+                taskNameError: taskNameError,
                 onChanged: taskValidationCubit.updadteTaskName,
               ),
               SizedBox(height: 20.h),
-              Text('Task Description', style: context.textTheme.titleSmall),
+              Text('Task Description', style: context.textTheme.titleMedium),
               SizedBox(height: 8.h),
-              TextFormField(
-                maxLines: 4,
-                decoration: InputDecoration(
-                  hintText:
-                      'Finish onboarding UI and hand off to devs by Thursday...',
-                  errorText: descriptionError,
-                ),
+              CustomTextFormField(
+                hinttext:
+                    'Finish onboarding UI and hand off to devs by Thursday...',
+                taskNameError: descriptionError,
                 onChanged: taskValidationCubit.updadteTaskDescription,
+                maxLines: 4,
               ),
             ],
           ),
