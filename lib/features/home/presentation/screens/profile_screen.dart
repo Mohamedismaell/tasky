@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
+import 'package:to_do_app/core/theme/manager/theme_cubit.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -25,12 +27,31 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius: 85,
-                backgroundColor: Colors.transparent,
-                child: ClipOval(
-                  child: SvgPicture.asset('assets/images/work_progress.svg'),
-                ),
+              Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  CircleAvatar(
+                    radius: 50.sp,
+                    backgroundColor: Colors.transparent,
+                    child: ClipOval(
+                      child: SvgPicture.asset(
+                        'assets/images/work_progress.svg',
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: 34.w,
+                      height: 34.w,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: context.colorTheme.surface,
+                      ),
+                      child: Icon(Icons.camera_alt_outlined, size: 18.sp),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 8.h),
               Text(userName, style: context.textTheme.titleLarge),
@@ -49,17 +70,32 @@ class ProfileScreen extends StatelessWidget {
                 context,
                 Icons.person_2_outlined,
                 'User Details',
+                true,
+                false,
                 false,
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 10.h),
+              Divider(color: context.colorTheme.onPrimary),
+              SizedBox(height: 10.h),
               _buildProfileItem(
                 context,
                 Icons.mode_night_outlined,
                 'Dark Mode',
+                false,
+                true,
+                false,
+              ),
+              SizedBox(height: 10.h),
+              Divider(color: context.colorTheme.onPrimary),
+              SizedBox(height: 10.h),
+              _buildProfileItem(
+                context,
+                Icons.logout,
+                'Log Out',
+                false,
+                false,
                 true,
               ),
-              SizedBox(height: 20.h),
-              _buildProfileItem(context, Icons.logout, 'Log Out', false),
             ],
           ),
         ),
@@ -72,16 +108,42 @@ Widget _buildProfileItem(
   BuildContext context,
   IconData icon,
   String title,
+  bool isDetails,
   bool isMode,
+  bool isLogout,
 ) {
-  return Row(
-    children: [
-      Icon(icon, size: 24.sp),
-      SizedBox(width: 16.w),
-      Expanded(child: Text(title, style: context.textTheme.bodyLarge)),
-      isMode
-          ? Switch(value: false, onChanged: (value) {})
-          : Icon(Icons.arrow_forward_ios, size: 24.sp),
-    ],
+  return GestureDetector(
+    onTap: () {},
+    child: Row(
+      children: [
+        isDetails
+            ? SvgPicture.asset(
+                'assets/images/profile.svg',
+                height: 20.sp,
+                // width: 20.sp,
+                colorFilter: ColorFilter.mode(
+                  context.colorTheme.onPrimary,
+                  BlendMode.srcIn,
+                ),
+              )
+            : isMode
+            ? Transform.rotate(angle: 2.5, child: Icon(icon, size: 24.sp))
+            : Icon(icon, size: 24.sp),
+        SizedBox(width: 16.w),
+        Expanded(child: Text(title, style: context.textTheme.bodyLarge)),
+        isMode
+            ? BlocBuilder<ThemeCubit, ThemeState>(
+                builder: (context, state) {
+                  return Switch(
+                    value: state.isDark,
+                    onChanged: (value) {
+                      context.read<ThemeCubit>().toggleTheme();
+                    },
+                  );
+                },
+              )
+            : Icon(Icons.arrow_forward_ios, size: 24.sp),
+      ],
+    ),
   );
 }
