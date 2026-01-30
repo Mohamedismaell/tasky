@@ -31,6 +31,34 @@ class UserValidationCubit extends Cubit<UserValidationState> {
     motivationQuote = value;
   }
 
+  void submitUserName() {
+    final nameError = validators.getValidator(
+      UserValidationType.username,
+      userName,
+    );
+
+    if (nameError != null) {
+      emit(
+        UserValidationFailure(
+          userNameError: nameError,
+          motivationQuoteError: null,
+          userDetails: state.userDetails,
+        ),
+      );
+      return;
+    }
+    final updatedUserDetails = UserDetailsModel(
+      userName: userName,
+      motivationQuote: state.userDetails.motivationQuote,
+    );
+
+    _persist(updatedUserDetails);
+
+    emit(UserValidationSuccess(userDetails: updatedUserDetails));
+
+    _resetForm();
+  }
+
   void submitUserDetails() {
     final nameError = validators.getValidator(
       UserValidationType.username,

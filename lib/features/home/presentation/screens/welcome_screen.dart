@@ -7,31 +7,22 @@ import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/routes/app_routes.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/core/theme/manager/theme_cubit.dart';
+import 'package:to_do_app/core/widget/custom_text_form_field.dart';
+import 'package:to_do_app/features/home/presentation/manager/user_validation/user_validation_cubit.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    // final bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.r),
           child: LayoutBuilder(
             builder: (context, constraints) {
               return SingleChildScrollView(
-                // physics: isKeyboardOpen
-                //     ? const ClampingScrollPhysics()
-                //     : const NeverScrollableScrollPhysics(),
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: constraints.maxHeight,
-                    // MediaQuery.sizeOf(context).height -
-                    // MediaQuery.of(context).padding.top -
-                    // MediaQuery.of(context).padding.bottom -
-                    // MediaQuery.of(context).viewInsets.bottom,
-                  ),
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
                   child: IntrinsicHeight(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -80,8 +71,6 @@ class WelcomeScreen extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return Column(
-      // crossAxisAlignment: CrossAxisAlignment.center,
-      // mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -105,82 +94,50 @@ class WelcomeScreen extends StatelessWidget {
   }
 }
 
-class _UserForm extends StatefulWidget {
+class _UserForm extends StatelessWidget {
   const _UserForm();
 
   @override
-  State<_UserForm> createState() => _UserFormState();
-}
-
-class _UserFormState extends State<_UserForm> {
-  String? nameErrorText;
-  bool validate = false;
-  late TextEditingController nameController;
-  @override
-  void initState() {
-    nameController = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    super.dispose();
-  }
-
-  void _validateUserName() {
-    setState(() {
-      if (nameController.text.isEmpty) {
-        nameErrorText = 'Please enter your name';
-        validate = false;
-      } else if (nameController.text.length < 3) {
-        nameErrorText = 'Name must be at least 3 characters long';
-        validate = false;
-      } else {
-        nameErrorText = null;
-        validate = true;
-        print("Success! Data is: ${nameController.text}");
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Full Name', style: context.textTheme.bodyLarge),
-        SizedBox(height: 8.h),
-        TextField(
-          controller: nameController,
-          decoration: InputDecoration(
-            hintText: 'e.g. Sarah Khalid',
-            errorText: nameErrorText,
-          ),
-        ),
-        SizedBox(height: 24.h),
-        Center(
-          child: SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () async {
-                _validateUserName();
-                cacheHelper.saveData(
-                  key: 'username',
-                  value: nameController.text,
-                );
-                nameController.clear();
-                // ignore: use_build_context_synchronously
-                validate ? context.go(AppRoutes.home) : null;
-              },
-              child: Text(
-                'Let’s Get Started',
-                // style: context.textTheme.bodyMedium,
+    return BlocListener<UserValidationCubit, UserValidationState>(
+      listener: (context, state) {
+        if (state is UserValidationSuccess) {
+          context.push(AppRoutes.home);
+        }
+      },
+      child: BlocBuilder<UserValidationCubit, UserValidationState>(
+        builder: (context, state) {
+          String? userNameError;
+          final userValidationCubit = context.read<UserValidationCubit>();
+          if (state is UserValidationFailure) {
+            userNameError = state.userNameError;
+          }
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Full Name', style: context.textTheme.bodyLarge),
+              SizedBox(height: 8.h),
+              CustomTextFormField(
+                onChanged: (value) => userValidationCubit.updateUserName(value),
+                errorMessage: userNameError,
+                hinttext: 'e.g. Sarah Khalid',
               ),
-            ),
-          ),
-        ),
-      ],
+              SizedBox(height: 24.h),
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      userValidationCubit.submitUserName();
+                    },
+                    child: Text('Let’s Get Started'),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

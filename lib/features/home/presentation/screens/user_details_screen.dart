@@ -38,7 +38,7 @@ class UserDetailsScreen extends StatelessWidget {
                   SizedBox(height: 8.h),
                   CustomTextFormField(
                     hinttext: 'Mohamed Ismael',
-                    taskNameError: userNameError,
+                    errorMessage: userNameError,
                     onChanged: userValidationCubit.updateUserName,
                   ),
                   SizedBox(height: 20.h),
@@ -50,7 +50,7 @@ class UserDetailsScreen extends StatelessWidget {
                   Expanded(
                     child: CustomTextFormField(
                       hinttext: 'One task at a time. One step closer',
-                      taskNameError: quoteError,
+                      errorMessage: quoteError,
                       onChanged: userValidationCubit.updateMotivationQuote,
                       maxLines: 4,
                     ),

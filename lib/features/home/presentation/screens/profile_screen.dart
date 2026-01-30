@@ -13,8 +13,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String userName = cacheHelper.getData(key: 'username');
-
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Colors.transparent,

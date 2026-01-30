@@ -27,7 +27,7 @@ class TaskForm extends StatelessWidget {
               SizedBox(height: 8.h),
               CustomTextFormField(
                 hinttext: 'Finish UI design for login screen...',
-                taskNameError: taskNameError,
+                errorMessage: taskNameError,
                 onChanged: taskValidationCubit.updadteTaskName,
               ),
               SizedBox(height: 20.h),
@@ -36,7 +36,7 @@ class TaskForm extends StatelessWidget {
               CustomTextFormField(
                 hinttext:
                     'Finish onboarding UI and hand off to devs by Thursday...',
-                taskNameError: descriptionError,
+                errorMessage: descriptionError,
                 onChanged: taskValidationCubit.updadteTaskDescription,
                 maxLines: 4,
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +7,7 @@ import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/routes/app_routes.dart';
 import 'package:to_do_app/core/theme/app_colors.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
+import 'package:to_do_app/features/home/presentation/manager/user_validation/user_validation_cubit.dart';
 import 'package:to_do_app/features/home/presentation/widgets/custom_list_tasks.dart';
 import 'package:to_do_app/features/home/presentation/widgets/home_header.dart';
 import 'package:to_do_app/features/home/presentation/widgets/priority_tasks.dart';
@@ -19,7 +21,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final String userName = cacheHelper.getData(key: 'username');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,30 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: CustomScrollView(
             slivers: [
-              SliverToBoxAdapter(child: HomeHeader(userName: userName)),
+              HomeHeader(),
               SliverToBoxAdapter(child: SizedBox(height: 16.h)),
-              SliverToBoxAdapter(
-                child: Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Hello $userName, Your work Is almost done !  ',
-                        style: context.textTheme.titleLarge,
-                      ),
-                      WidgetSpan(
-                        alignment: PlaceholderAlignment.bottom,
-                        child: SvgPicture.asset(
-                          'assets/images/waving_hand.svg',
-                          width: 32.w,
-                          height: 32.h,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              _buildWelcomeText(context),
               SliverToBoxAdapter(child: SizedBox(height: 16.h)),
-              SliverToBoxAdapter(child: Progerss()),
+              Progerss(),
               SliverToBoxAdapter(child: SizedBox(height: 8.h)),
               SliverToBoxAdapter(child: PriorityTasks()),
               SliverToBoxAdapter(child: SizedBox(height: 24.h)),
@@ -70,6 +52,34 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+Widget _buildWelcomeText(BuildContext context) {
+  return BlocBuilder<UserValidationCubit, UserValidationState>(
+    builder: (context, state) {
+      return SliverToBoxAdapter(
+        child: Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text:
+                    'Hello ${state.userDetails.userName}, Your work Is almost done !  ',
+                style: context.textTheme.titleLarge,
+              ),
+              WidgetSpan(
+                alignment: PlaceholderAlignment.bottom,
+                child: SvgPicture.asset(
+                  'assets/images/waving_hand.svg',
+                  width: 32.w,
+                  height: 32.h,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }
 
 Widget _buildFlotingButton(BuildContext context) {
