@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:to_do_app/core/enums/validation_type.dart';
+import 'package:to_do_app/core/enums/task_options.dart';
 import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/utils/validators/form_validators.dart';
 import 'package:to_do_app/features/home/presentation/models/task_input.dart';

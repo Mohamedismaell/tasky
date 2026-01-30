@@ -57,5 +57,16 @@ ThemeData getLightTheme() {
       }),
       side: BorderSide(width: 3, color: lightColorScheme.outline),
     ),
+
+    splashFactory: NoSplash.splashFactory,
+    popupMenuTheme: PopupMenuThemeData(
+      color: AppColors.backgroundLight,
+      labelTextStyle: WidgetStateProperty.all(
+        responsiveTextTheme.titleSmall?.copyWith(),
+      ),
+      elevation: 1,
+      shadowColor: AppColors.backgroundDark,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.r)),
+    ),
   );
 }

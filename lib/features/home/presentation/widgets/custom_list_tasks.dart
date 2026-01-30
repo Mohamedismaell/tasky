@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:to_do_app/core/enums/task_options.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/features/home/presentation/manager/task_validation/task_validation_cubit.dart';
 import 'package:to_do_app/features/home/presentation/models/task_input.dart';
@@ -70,9 +71,28 @@ class CustomeListTasks extends StatelessWidget {
                               ],
                             ),
                           ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.more_vert_rounded),
+                          // _buildMoreButton(context, currentTask),
+                          PopupMenuButton<TaskOptions>(
+                            itemBuilder: (context) =>
+                                TaskOptions.values.map((e) {
+                                  // print('map e => $e');
+                                  return PopupMenuItem<TaskOptions>(
+                                    value: e,
+                                    child: Text(e.name),
+                                  );
+                                }).toList(),
+                            // onOpened: () => print('opened'),
+                            // onCanceled: () => print('canceled'),
+                            onSelected: (value) {
+                              switch (value) {
+                                case TaskOptions.delete:
+                                  print(value);
+                                  break;
+                                case TaskOptions.update:
+                                  print(value);
+                                  break;
+                              }
+                            },
                           ),
                         ],
                       ),
@@ -84,3 +104,16 @@ class CustomeListTasks extends StatelessWidget {
     );
   }
 }
+// Widget _buildMoreButton(BuildContext context, TaskInput task) {
+//   return IconButton(
+//     onPressed: () {
+//       switch (task.id) {
+//         case TaskOption.delete.name:
+//           break;
+//         case TaskOption.update.name:
+//           break;
+//       }
+//     },
+//     icon: Icon(Icons.more_vert_rounded),
+//   );
+// }

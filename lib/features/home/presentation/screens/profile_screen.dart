@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/core/theme/manager/theme_cubit.dart';
 import 'package:to_do_app/features/home/presentation/screens/user_details_screen.dart';

@@ -67,5 +67,19 @@ ThemeData getDarkTheme() {
       }),
       side: BorderSide(width: 2, color: Colors.grey),
     ),
+
+    splashFactory: NoSplash.splashFactory,
+    popupMenuTheme: PopupMenuThemeData(
+      color: AppColors.backgroundDark,
+      labelTextStyle: WidgetStateProperty.all(
+        responsiveTextTheme.titleSmall?.copyWith(),
+      ),
+      elevation: 1,
+      shadowColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24.r),
+        // side: BorderSide(),
+      ),
+    ),
   );
 }
