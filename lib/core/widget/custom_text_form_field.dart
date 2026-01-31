@@ -7,8 +7,10 @@ class CustomTextFormField extends StatelessWidget {
     required this.onChanged,
     this.errorMessage,
     this.maxLines,
+    this.initialValue,
   });
 
+  final String? initialValue;
   final int? maxLines;
   final String hinttext;
   final String? errorMessage;
@@ -17,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       maxLines: maxLines ?? 1,
       decoration: InputDecoration(hintText: hinttext, errorText: errorMessage),
       onChanged: onChanged,

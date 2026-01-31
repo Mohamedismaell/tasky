@@ -7,6 +7,7 @@ import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/features/home/presentation/manager/task_validation/task_validation_cubit.dart';
 import 'package:to_do_app/features/home/presentation/models/task_input.dart';
 import 'package:to_do_app/features/home/presentation/widgets/card_container.dart';
+import 'package:to_do_app/features/home/presentation/widgets/priority_switch.dart';
 import 'package:to_do_app/features/home/presentation/widgets/task_form.dart';
 import 'package:to_do_app/features/home/presentation/widgets/text_disabled.dart';
 
@@ -144,76 +145,15 @@ void _showButtonSheet(BuildContext context, TaskInput task) {
       child: Column(
         children: [
           SizedBox(height: 8.h),
-          TaskForm(),
+          TaskForm(task: task),
           SizedBox(height: 10.h),
-          _buildPrioritySwitch(context),
+          PrioritySwitch(),
           SizedBox(height: 20.h),
           Spacer(),
-          _buildAddTaskButton(context, task),
+          // _buildAddTaskButton(context, task),
           // SizedBox(height: 16.h),
         ],
       ),
     ),
   );
 }
-
-Widget _buildAddTaskButton(BuildContext context, TaskInput task) {
-  return BlocListener<TaskValidationCubit, TaskValidationState>(
-    listener: (context, state) {
-      if (state is TaskValidationSuccess) {
-        context.pop();
-        context.read<TaskValidationCubit>().reset();
-      }
-    },
-    child: SizedBox(
-      width: double.infinity,
-      child: ElevatedButton.icon(
-        onPressed: () {
-          context.read<TaskValidationCubit>().startEdit(task);
-          // context.read<TaskValidationCubit>().submit();
-          print('Edite');
-          // context.pop();
-        },
-        icon: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 4.w),
-          child: Icon(Icons.add),
-        ),
-        label: Text('Add Task'),
-      ),
-    ),
-  );
-}
-
-Widget _buildPrioritySwitch(BuildContext context) {
-  return Row(
-    children: [
-      Text('High Priority', style: context.textTheme.titleMedium),
-      Spacer(),
-      BlocBuilder<TaskValidationCubit, TaskValidationState>(
-        builder: (context, state) {
-          return Switch(
-            onChanged: (value) {
-              context.read<TaskValidationCubit>().updadteTaskPriority(value);
-            },
-            value: state is TaskisPriority ? true : false,
-          );
-        },
-      ),
-    ],
-  );
-}
-
-// }
-// Widget _buildMoreButton(BuildContext context, TaskInput task) {
-//   return IconButton(
-//     onPressed: () {
-//       switch (task.id) {
-//         case TaskOption.delete.name:
-//           break;
-//         case TaskOption.update.name:
-//           break;
-//       }
-//     },
-//     icon: Icon(Icons.more_vert_rounded),
-//   );
-// }

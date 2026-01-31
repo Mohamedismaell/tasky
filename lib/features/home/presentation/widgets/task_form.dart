@@ -4,11 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/core/widget/custom_text_form_field.dart';
 import 'package:to_do_app/features/home/presentation/manager/task_validation/task_validation_cubit.dart';
+import 'package:to_do_app/features/home/presentation/models/task_input.dart';
 
 class TaskForm extends StatelessWidget {
-  const TaskForm({super.key});
-  // required this.isEditing
+  const TaskForm({super.key, this.task});
   // final bool isEditing;
+  final TaskInput? task;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TaskValidationCubit, TaskValidationState>(
@@ -27,6 +28,7 @@ class TaskForm extends StatelessWidget {
               Text('Task Name', style: context.textTheme.titleMedium),
               SizedBox(height: 8.h),
               CustomTextFormField(
+                initialValue: task?.title ?? '',
                 hinttext: 'Finish UI design for login screen...',
                 errorMessage: taskNameError,
                 onChanged: taskValidationCubit.updadteTaskName,
@@ -35,6 +37,7 @@ class TaskForm extends StatelessWidget {
               Text('Task Description', style: context.textTheme.titleMedium),
               SizedBox(height: 8.h),
               CustomTextFormField(
+                initialValue: task?.description ?? '',
                 hinttext:
                     'Finish onboarding UI and hand off to devs by Thursday...',
                 errorMessage: descriptionError,
