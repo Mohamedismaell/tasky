@@ -5,14 +5,14 @@ class TaskInput extends Equatable {
 
   final String title;
   final String description;
-  final bool priority;
+  final bool isPriority;
   final bool isDone;
 
   const TaskInput({
     required this.id,
     required this.title,
     required this.description,
-    required this.priority,
+    required this.isPriority,
     this.isDone = false,
   });
 
@@ -20,14 +20,14 @@ class TaskInput extends Equatable {
     int? id,
     String? title,
     String? description,
-    bool? priority,
+    bool? isPriority,
     bool? isDone,
   }) {
     return TaskInput(
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
-      priority: priority ?? this.priority,
+      isPriority: isPriority ?? this.isPriority,
       isDone: isDone ?? this.isDone,
     );
   }
@@ -37,7 +37,7 @@ class TaskInput extends Equatable {
       id: json['id'] as int,
       title: json['title'] as String,
       description: json['description'] as String,
-      priority: json['priority'] as bool,
+      isPriority: json['isPriority'] as bool,
       isDone: json['isDone'] as bool? ?? false,
     );
   }
@@ -47,16 +47,16 @@ class TaskInput extends Equatable {
       'id': id,
       'title': title,
       'description': description,
-      'priority': priority,
+      'isPriority': isPriority,
       'isDone': isDone,
     };
   }
 
   @override
   String toString() {
-    return 'TaskInput(id: $id, title: $title, description: $description, priority: $priority, isDone: $isDone)';
+    return 'TaskInput(id: $id, title: $title, description: $description, isPriority: $isPriority, isDone: $isDone)';
   }
 
   @override
-  List<Object?> get props => [id, title, description, priority, isDone];
+  List<Object?> get props => [id, title, description, isPriority, isDone];
 }

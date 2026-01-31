@@ -6,6 +6,7 @@ import 'package:to_do_app/core/enums/task_options.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/features/home/presentation/manager/task_validation/task_validation_cubit.dart';
 import 'package:to_do_app/features/home/presentation/models/task_input.dart';
+import 'package:to_do_app/features/home/presentation/widgets/action_button.dart';
 import 'package:to_do_app/features/home/presentation/widgets/card_container.dart';
 import 'package:to_do_app/features/home/presentation/widgets/priority_switch.dart';
 import 'package:to_do_app/features/home/presentation/widgets/task_form.dart';
@@ -147,10 +148,10 @@ void _showButtonSheet(BuildContext context, TaskInput task) {
           SizedBox(height: 8.h),
           TaskForm(task: task),
           SizedBox(height: 10.h),
-          PrioritySwitch(),
+          PrioritySwitch(lastPriority: task.isPriority),
           SizedBox(height: 20.h),
           Spacer(),
-          // _buildAddTaskButton(context, task),
+          ActionButton(task: task),
           // SizedBox(height: 16.h),
         ],
       ),

@@ -11,7 +11,6 @@ class AddTaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Colors.transparent,
         title: Align(
           alignment: AlignmentGeometry.centerLeft,
           child: Text('New Task'),
@@ -36,26 +35,3 @@ class AddTaskScreen extends StatelessWidget {
     );
   }
 }
-
-//   Widget _buildAddTaskButton(BuildContext context) {
-//     return BlocListener<TaskValidationCubit, TaskValidationState>(
-//       listener: (context, state) {
-//         if (state is TaskValidationSuccess) {
-//           context.pop();
-//           context.read<TaskValidationCubit>().reset();
-//         }
-//       },
-//       child: SizedBox(
-//         width: double.infinity,
-//         child: ElevatedButton.icon(
-//           onPressed: () => context.read<TaskValidationCubit>().submit(),
-//           icon: Padding(
-//             padding: EdgeInsets.symmetric(horizontal: 4.w),
-//             child: Icon(Icons.add),
-//           ),
-//           label: Text('Add Task'),
-//         ),
-//       ),
-//     );
-//   }
-// }

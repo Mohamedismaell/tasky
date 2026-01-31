@@ -33,11 +33,6 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
 
   void updadteTaskPriority(bool value) {
     taskPriority = value;
-    emit(
-      value
-          ? TaskisPriority(tasks: state.tasks)
-          : TaskisNotPriority(tasks: state.tasks),
-    );
   }
 
   void startEdit(TaskInput task) {
@@ -49,7 +44,7 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
       taskDescription = task.description;
     }
     if (taskPriority) {
-      taskPriority = task.priority;
+      taskPriority = task.isPriority;
     }
     print('taskPriority === > $taskPriority');
     submit();
@@ -89,7 +84,7 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
           id: DateTime.now().millisecondsSinceEpoch,
           title: taskName,
           description: taskDescription,
-          priority: taskPriority,
+          isPriority: taskPriority,
         ),
       );
     } else {
@@ -100,7 +95,7 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
         updatedTasks[index] = updatedTasks[index].copyWith(
           title: taskName,
           description: taskDescription,
-          priority: taskPriority,
+          isPriority: taskPriority,
         );
       }
     }

@@ -13,14 +13,6 @@ final class TaskValidationInitial extends TaskValidationState {
   const TaskValidationInitial({required super.tasks});
 }
 
-final class TaskisPriority extends TaskValidationState {
-  const TaskisPriority({required super.tasks});
-}
-
-final class TaskisNotPriority extends TaskValidationState {
-  const TaskisNotPriority({required super.tasks});
-}
-
 final class TaskValidationFailure extends TaskValidationState {
   final String? taskNameError;
   final String? taskDescriptionError;

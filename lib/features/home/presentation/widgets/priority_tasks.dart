@@ -16,7 +16,7 @@ class PriorityTasks extends StatelessWidget {
       builder: (context, state) {
         final List<TaskInput> allTasks = state.tasks;
         final List<TaskInput> priorityTasks = allTasks
-            .where((task) => task.priority)
+            .where((task) => task.isPriority)
             .toList();
         return cardContainer(
           context: context,
