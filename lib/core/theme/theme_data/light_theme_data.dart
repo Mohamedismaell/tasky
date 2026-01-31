@@ -34,7 +34,13 @@ ThemeData getLightTheme() {
         borderSide: BorderSide(color: AppColors.outlineLight),
       ),
     ),
-
+    //! dialog
+    dialogTheme: DialogThemeData(
+      backgroundColor: AppColors.backgroundLight,
+      titleTextStyle: AppTextTheme.from(lightColorScheme).titleLarge,
+      contentTextStyle: AppTextTheme.from(lightColorScheme).bodyLarge,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+    ),
     //! ElevatedButton
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -66,7 +72,11 @@ ThemeData getLightTheme() {
       ),
       elevation: 1,
       shadowColor: AppColors.backgroundDark,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.r)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+    ),
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: AppColors.backgroundLight,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
     ),
   );
 }

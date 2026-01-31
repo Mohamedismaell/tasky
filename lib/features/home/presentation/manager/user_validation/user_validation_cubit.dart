@@ -104,14 +104,14 @@ class UserValidationCubit extends Cubit<UserValidationState> {
       final decoded = jsonDecode(encoded);
       if (decoded is Map<String, dynamic>) {
         final userDetails = UserDetailsModel.fromJson(decoded);
-        print('userDetails is here  === >>> $userDetails');
+        // print('userDetails is here  === >>> $userDetails');
         emit(UserValidationInitial(userDetails: userDetails));
       } else {
         // Invalid data format - clear it
         cacheHelper.removeData(key: 'userDetails');
       }
     } catch (e) {
-      print('Error parsing userDetails: $e');
+      // print('Error parsing userDetails: $e');
       cacheHelper.removeData(key: 'userDetails');
     }
   }

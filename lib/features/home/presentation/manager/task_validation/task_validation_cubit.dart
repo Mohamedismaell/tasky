@@ -40,17 +40,25 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
     );
   }
 
-  // void startEdit(TaskInput task) {
-  //   editingTaskId = task.id;
-  //   taskName = task.title;
-  //   taskDescription = task.description;
-  //   taskPriority = task.priority;
-  // }
+  void startEdit(TaskInput task) {
+    editingTaskId = task.id;
+    if (taskName.isEmpty) {
+      taskName = task.title;
+    }
+    if (taskDescription.isEmpty) {
+      taskDescription = task.description;
+    }
+    if (taskPriority) {
+      taskPriority = task.priority;
+    }
+    print('taskPriority === > $taskPriority');
+    submit();
+  }
 
-  // void cancelEdit() {
-  //   _resetForm();
-  //   emit(TaskValidationInitial(tasks: state.tasks));
-  // }
+  void cancelEdit() {
+    _resetForm();
+    emit(TaskValidationInitial(tasks: state.tasks));
+  }
 
   void submit() {
     final nameError = validators.getValidator(
@@ -75,28 +83,27 @@ class TaskValidationCubit extends Cubit<TaskValidationState> {
 
     final updatedTasks = List<TaskInput>.from(state.tasks);
 
-    // if (editingTaskId == null) {
-    //   //  ADD
-    updatedTasks.add(
-      TaskInput(
-        id: DateTime.now().millisecondsSinceEpoch,
-        title: taskName,
-        description: taskDescription,
-        priority: taskPriority,
-      ),
-    );
-    // } else {
-    //  UPDATE
-    // print('Update here === >');/
-    // final index = updatedTasks.indexWhere((t) => t.id == editingTaskId);
-    // if (index != -1) {
-    //   updatedTasks[index] = updatedTasks[index].copyWith(
-    //     title: taskName,
-    //     description: taskDescription,
-    //     priority: taskPriority,
-    //   );
-    // }
-    // }
+    if (editingTaskId == null) {
+      updatedTasks.add(
+        TaskInput(
+          id: DateTime.now().millisecondsSinceEpoch,
+          title: taskName,
+          description: taskDescription,
+          priority: taskPriority,
+        ),
+      );
+    } else {
+      //  UPDATE
+      // print('Update here === >');
+      final index = updatedTasks.indexWhere((t) => t.id == editingTaskId);
+      if (index != -1) {
+        updatedTasks[index] = updatedTasks[index].copyWith(
+          title: taskName,
+          description: taskDescription,
+          priority: taskPriority,
+        );
+      }
+    }
 
     _persist(updatedTasks);
 

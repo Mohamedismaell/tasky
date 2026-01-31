@@ -18,7 +18,12 @@ ThemeData getDarkTheme() {
       backgroundColor: Colors.transparent,
       titleTextStyle: AppTextTheme.from(darkColorScheme).titleLarge,
     ),
-
+    dialogTheme: DialogThemeData(
+      backgroundColor: AppColors.backgroundDark,
+      titleTextStyle: AppTextTheme.from(darkColorScheme).titleLarge,
+      contentTextStyle: AppTextTheme.from(darkColorScheme).bodyLarge,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+    ),
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppColors.textPrimaryDark,
       selectionColor: AppColors.textPrimaryDark.withOpacity(0.4),
@@ -70,16 +75,18 @@ ThemeData getDarkTheme() {
 
     splashFactory: NoSplash.splashFactory,
     popupMenuTheme: PopupMenuThemeData(
+      menuPadding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 4.h),
       color: AppColors.backgroundDark,
       labelTextStyle: WidgetStateProperty.all(
         responsiveTextTheme.titleSmall?.copyWith(),
       ),
       elevation: 1,
       shadowColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24.r),
-        // side: BorderSide(),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+    ),
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: AppColors.backgroundDark,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
     ),
   );
 }

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:to_do_app/core/enums/task_options.dart';
-import 'package:to_do_app/core/theme/app_colors.dart';
 import 'package:to_do_app/core/theme/extensions/theme_extension.dart';
 import 'package:to_do_app/features/home/presentation/manager/task_validation/task_validation_cubit.dart';
 import 'package:to_do_app/features/home/presentation/models/task_input.dart';
@@ -142,7 +141,7 @@ void _showButtonSheet(BuildContext context, TaskInput task) {
     context: context,
     builder: (context) => Padding(
       padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
-      child: ListView(
+      child: Column(
         children: [
           SizedBox(height: 8.h),
           TaskForm(),
@@ -150,7 +149,7 @@ void _showButtonSheet(BuildContext context, TaskInput task) {
           _buildPrioritySwitch(context),
           SizedBox(height: 20.h),
           Spacer(),
-          _buildAddTaskButton(context),
+          _buildAddTaskButton(context, task),
           // SizedBox(height: 16.h),
         ],
       ),
@@ -158,7 +157,7 @@ void _showButtonSheet(BuildContext context, TaskInput task) {
   );
 }
 
-Widget _buildAddTaskButton(BuildContext context) {
+Widget _buildAddTaskButton(BuildContext context, TaskInput task) {
   return BlocListener<TaskValidationCubit, TaskValidationState>(
     listener: (context, state) {
       if (state is TaskValidationSuccess) {
@@ -169,7 +168,12 @@ Widget _buildAddTaskButton(BuildContext context) {
     child: SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
-        onPressed: () => context.read<TaskValidationCubit>().submit(),
+        onPressed: () {
+          context.read<TaskValidationCubit>().startEdit(task);
+          // context.read<TaskValidationCubit>().submit();
+          print('Edite');
+          // context.pop();
+        },
         icon: Padding(
           padding: EdgeInsets.symmetric(horizontal: 4.w),
           child: Icon(Icons.add),

@@ -7,7 +7,8 @@ import 'package:to_do_app/features/home/presentation/manager/task_validation/tas
 
 class TaskForm extends StatelessWidget {
   const TaskForm({super.key});
-
+  // required this.isEditing
+  // final bool isEditing;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TaskValidationCubit, TaskValidationState>(
