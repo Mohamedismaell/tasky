@@ -1,0 +1,1 @@
+enum ImageOptions { camera, gallery }

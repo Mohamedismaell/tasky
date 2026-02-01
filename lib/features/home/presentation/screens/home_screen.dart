@@ -26,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
       floatingActionButton: _buildFlotingButton(context),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -45,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SliverToBoxAdapter(child: SizedBox(height: 16.h)),
               CustomeListTasks(allTaks: true),
+              SliverToBoxAdapter(child: SizedBox(height: 70.h)),
             ],
           ),
         ),
@@ -83,7 +83,7 @@ Widget _buildWelcomeText(BuildContext context) {
 
 Widget _buildFlotingButton(BuildContext context) {
   return Padding(
-    padding: EdgeInsets.only(bottom: 24.h),
+    padding: EdgeInsets.only(bottom: 12.h),
     child: ElevatedButton.icon(
       onPressed: () => context.push(AppRoutes.addtask),
       icon: Icon(Icons.add),

@@ -30,14 +30,13 @@ Future<void> main() async {
   debugPrint('Step 5: Supabase initialized');
 
   // cacheHelper.clearData(key: 'userDetails');
-
   // cacheHelper.clearData(key: 'tasks');
   // cacheHelper.clearData(key: 'removedindex');
 
   await ScreenUtil.ensureScreenSize();
   runApp(
-    DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
-    // AppBootstrap(),
+    // DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),
+    AppBootstrap(),
   );
 }
 

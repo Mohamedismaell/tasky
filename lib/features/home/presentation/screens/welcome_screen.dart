@@ -101,7 +101,7 @@ class _UserForm extends StatelessWidget {
     return BlocListener<UserValidationCubit, UserValidationState>(
       listener: (context, state) {
         if (state is UserValidationSuccess) {
-          context.push(AppRoutes.home);
+          context.go(AppRoutes.home);
         }
       },
       child: BlocBuilder<UserValidationCubit, UserValidationState>(

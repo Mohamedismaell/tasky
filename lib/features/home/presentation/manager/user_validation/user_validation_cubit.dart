@@ -1,12 +1,10 @@
 import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:to_do_app/core/enums/task_options.dart';
 import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/utils/validators/user_validation.dart';
 import 'package:to_do_app/features/home/presentation/models/user_details.dart';
-
 part 'user_validation_state.dart';
 
 class UserValidationCubit extends Cubit<UserValidationState> {
@@ -20,15 +18,21 @@ class UserValidationCubit extends Cubit<UserValidationState> {
   }
 
   final UserValidation validators;
-  String userName = cacheHelper.getData(key: 'userName') ?? '';
-  String motivationQuote = cacheHelper.getData(key: 'motivationQuote') ?? '';
-
+  String userName = '';
+  String motivationQuote = '';
+  // String? imagePath = 'assets/images/deafult_user_cover.png';
   void updateUserName(String value) {
     userName = value;
   }
 
   void updateMotivationQuote(String value) {
     motivationQuote = value;
+  }
+
+  void updateImagePath(String? value) {
+    final updated = state.userDetails.copyWith(imagePath: value);
+    emit(UserValidationInitial(userDetails: updated));
+    _persist(updated);
   }
 
   void submitUserName() {
@@ -47,10 +51,7 @@ class UserValidationCubit extends Cubit<UserValidationState> {
       );
       return;
     }
-    final updatedUserDetails = UserDetailsModel(
-      userName: userName,
-      motivationQuote: state.userDetails.motivationQuote,
-    );
+    final updatedUserDetails = state.userDetails.copyWith(userName: userName);
 
     _persist(updatedUserDetails);
 
@@ -79,7 +80,7 @@ class UserValidationCubit extends Cubit<UserValidationState> {
       );
       return;
     }
-    final updatedUserDetails = UserDetailsModel(
+    final updatedUserDetails = state.userDetails.copyWith(
       userName: userName,
       motivationQuote: motivationQuote,
     );
@@ -94,6 +95,7 @@ class UserValidationCubit extends Cubit<UserValidationState> {
   void _persist(UserDetailsModel userDetails) {
     final encoded = jsonEncode(userDetails.toJson());
     cacheHelper.saveData(key: 'userDetails', value: encoded);
+    // print('userDetails is here  === >>> $userDetails');
   }
 
   void _loadUserDetails() {
@@ -104,7 +106,10 @@ class UserValidationCubit extends Cubit<UserValidationState> {
       final decoded = jsonDecode(encoded);
       if (decoded is Map<String, dynamic>) {
         final userDetails = UserDetailsModel.fromJson(decoded);
-        // print('userDetails is here  === >>> $userDetails');
+        print('userDetails is here  === >>> $userDetails');
+        userName = userDetails.userName;
+        motivationQuote = userDetails.motivationQuote;
+        // imagePath = userDetails.imagePath;
         emit(UserValidationInitial(userDetails: userDetails));
       } else {
         // Invalid data format - clear it
