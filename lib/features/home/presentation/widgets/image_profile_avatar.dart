@@ -39,9 +39,6 @@ class ImageProfileAvatar extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    //Todo Pick image
-                    //Todo Get Image
-                    //Todo Save image Local
                     pickImage(context);
                   },
                   child: Container(
