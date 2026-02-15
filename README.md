@@ -60,12 +60,28 @@ lib/
 </thead>
 <tbody>
 <tr>
-<td> <img src="https://via.placeholder.com/300x600?text=Light+Home" width="300" style="max-width: 100%;"></td>
-<td> <img src="https://via.placeholder.com/300x600?text=Dark+Home" width="300" style="max-width: 100%;"></td>
+<td> <img src="assets/app_images/normal/Screenshot_1771159434-portrait.png" width="300" style="max-width: 100%;"></td>
+<td> <img src="assets/app_images/normal/Screenshot_1771159439-portrait.png" width="300" style="max-width: 100%;"></td>
 </tr>
 <tr>
-<td><img src="https://via.placeholder.com/300x600?text=Add+Task" width="300" style="max-width: 100%;"></td>
-<td><img src="https://via.placeholder.com/300x600?text=Profile" width="300" style="max-width: 100%;"></td>
+<td><img src="assets/app_images/normal/Screenshot_1771159896-portrait.png" width="300" style="max-width: 100%;"></td>
+<td><img src="assets/app_images/normal/Screenshot_1771159899-portrait.png" width="300" style="max-width: 100%;"></td>
+</tr>
+<tr>
+<td><img src="assets/app_images/normal/Screenshot_1771159689-portrait.png" width="300" style="max-width: 100%;"></td>
+<td><img src="assets/app_images/normal/Screenshot_1771159621-portrait.png" width="300" style="max-width: 100%;"></td>
+</tr>
+<tr>
+<td><img src="assets/app_images/normal/Screenshot_1771159908-portrait.png" width="300" style="max-width: 100%;"></td>
+<td><img src="assets/app_images/normal/Screenshot_1771159916-portrait.png" width="300" style="max-width: 100%;"></td>
+</tr>
+<tr>
+<td><img src="assets/app_images/normal/Screenshot_1771159921-portrait.png" width="300" style="max-width: 100%;"></td>
+<td><img src="assets/app_images/normal/Screenshot_1771159926-portrait.png" width="300" style="max-width: 100%;"></td>
+</tr>
+<tr>
+<td><img src="assets/app_images/normal/Screenshot_1771161022-portrait.png" width="300" style="max-width: 100%;"></td>
+<td><img src="assets/app_images/normal/Screenshot_1771161019-portrait.png" width="300" style="max-width: 100%;"></td>
 </tr>
 </tbody>
 </table></markdown-accessiblity-table>
