@@ -54,8 +54,8 @@ lib/
 
 <thead>
 <tr>
-<th>Light Mode</th>
 <th>Dark Mode</th>
+<th>Light Mode</th>
 </tr>
 </thead>
 <tbody>
