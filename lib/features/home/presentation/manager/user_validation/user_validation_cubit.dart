@@ -1,10 +1,12 @@
 import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:to_do_app/core/enums/task_options.dart';
 import 'package:to_do_app/core/injection/common_di.dart';
 import 'package:to_do_app/core/utils/validators/user_validation.dart';
 import 'package:to_do_app/features/home/presentation/models/user_details.dart';
+
 part 'user_validation_state.dart';
 
 class UserValidationCubit extends Cubit<UserValidationState> {
@@ -109,14 +111,11 @@ class UserValidationCubit extends Cubit<UserValidationState> {
         print('userDetails is here  === >>> $userDetails');
         userName = userDetails.userName;
         motivationQuote = userDetails.motivationQuote;
-        // imagePath = userDetails.imagePath;
         emit(UserValidationInitial(userDetails: userDetails));
       } else {
-        // Invalid data format - clear it
         cacheHelper.removeData(key: 'userDetails');
       }
     } catch (e) {
-      // print('Error parsing userDetails: $e');
       cacheHelper.removeData(key: 'userDetails');
     }
   }

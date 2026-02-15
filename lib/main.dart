@@ -1,6 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -32,7 +33,7 @@ Future<void> main() async {
   // cacheHelper.clearData(key: 'userDetails');
   // cacheHelper.clearData(key: 'tasks');
   // cacheHelper.clearData(key: 'removedindex');
-
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   await ScreenUtil.ensureScreenSize();
   runApp(
     // DevicePreview(enabled: !kReleaseMode, builder: (context) => AppBootstrap()),

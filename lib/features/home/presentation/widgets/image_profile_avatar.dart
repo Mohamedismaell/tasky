@@ -1,8 +1,8 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:to_do_app/core/enums/image_options.dart';
@@ -27,14 +27,9 @@ class ImageProfileAvatar extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 50.sp,
                     backgroundColor: Colors.transparent,
-                    child: ClipOval(
-                      child: state.userDetails.imagePath != null
-                          ? Image.file(
-                              File(state.userDetails.imagePath!),
-                              fit: BoxFit.cover,
-                            )
-                          : SvgPicture.asset('assets/images/work_progress.svg'),
-                    ),
+                    backgroundImage: state.userDetails.imagePath != null
+                        ? FileImage(File(state.userDetails.imagePath!))
+                        : AssetImage('assets/images/profile_creat.png'),
                   ),
                 ),
                 GestureDetector(
@@ -136,8 +131,8 @@ Future<File?> pickPhoto(ImageOptions imageOptions) async {
 //!  await image.saveTo(imagePath);
 //*can do same job i think rather than ""File(image.path).copy(newPath)""
 saveImage(XFile image) async {
-  final appDir = await getApplicationDocumentsDirectory();
-  final newFile = await File(image.path).copy('${appDir.path}/${image.name}');
+  final dir = await getApplicationDocumentsDirectory();
+  final newFile = await File(image.path).copy('${dir.path}/${image.name}');
   return newFile;
   // await CacheHelper().saveData(key: 'image', value: path);
 }
